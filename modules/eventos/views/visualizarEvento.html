@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h3 class="modal-title"><strong>{{ evento.nombre }}</strong></h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+
+        <div class="col col-md-4 img-padding">
+            <br>
+            <br>
+            <img ng-src="images/Shop-icon.png" class="img-responsive img-entidad">
+        </div>
+
+        <div class="col col-md-8">
+            <ul class="list-group">
+                <h2>Información</h2>
+                <li class="list-group-item"><strong>Donde?: </strong>{{ evento.direccion.calle }} {{ evento.direccion.numero }} {{evento.depto}}</li>
+                <li class="list-group-item"><strong>Cuando?: </strong>Desde: {{ evento.fechaInicio | solofecha }} Hasta: {{ evento.fechaFin | solofecha }}</li>
+                <li class="list-group-item"><strong>Horario?: </strong>Desde: {{ evento.fechaInicio | solohora }} Hasta: {{ evento.fechaFin | solohora }}</li>
+                <li class="list-group-item"><strong>Precio: </strong>{{ evento.precio }}</li>
+                <li class="list-group-item"><strong>Sitio Web: </strong>{{ evento.sitioWeb }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col col-md-12">
+            <div class="col-md-3">
+                <p>Discapacidades Atendidas: </p>
+            </div>
+            <div class="col-md-9">
+                <ul style="list-style-type:none;">
+                    <li style="display: inline;margin: 0 10px 0 0;" ng ng-repeat="disc in listaTiposDiscapacidad">
+                        <label class="label label-success">{{disc.nombre}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col col-md-12">
+            <!-- <div class="col-md-3">
+                <p>Subcategorias: </p>
+            </div>
+            <div class="col-md-9">
+                <ul style="list-style-type:none;">
+                    <li style="display: inline;margin: 0 10px 0 0;" ng ng-repeat="subc in evento.listaSubCategoriasevento">
+                        <label class="label label-info">{{subc.nombre}}</label>
+                    </li>
+                </ul>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-md-12">
+            <h3>Descripción: </h3>
+            <textarea class="form-control" rows="5" readonly>{{ evento.descripcion }}</textarea>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="cancelar()">Cerrar</button>
+</div>

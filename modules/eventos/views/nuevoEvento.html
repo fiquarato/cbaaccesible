@@ -1,0 +1,158 @@
+<form name="myForm" ng-submit="validarCreacion(myForm.$valid)" novalidate="novalidate">
+
+<div class="modal-header">
+    <h3 class="modal-title"><strong>Nuevo Evento</strong></h3>
+    <h5>Completa todos los campos del Evento. Aquellos marcados con (*) son requeridos.</h5>
+
+</div>
+<div class="modal-body">
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="nombre" class="control-label">Nombre*</label>
+                <input name="nombre" type="text" ng-model="nuevoEvento.nombre" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="calle" class="control-label">Calle*</label>
+                <input name="calle" type="text" ng-model="nuevoEvento.direccion.calle" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="numeroDireccion" class="control-label">Nro*</label>
+                <input name="numeroDireccion" type="number" ng-model="nuevoEvento.direccion.numero" class="form-control" ng-minlength="1"
+                    ng-maxlength="5" required>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="codigoPostal" class="control-label">C.Postal</label>
+                <input name="codigoPostal" type="number" ng-model="nuevoEvento.direccion.codigoPostal" class="form-control" ng-minlength="1"
+                    ng-maxlength="5">
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="departamentoCalle" class="control-label">Depto</label>
+                <input name="departamentoCalle" type="text" ng-model="nuevoEvento.direccion.depto" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="precio" class="control-label">Precio</label>
+                <input name="precio" type="text" ng-model="nuevoEvento.precio" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="web" class="control-label">Sitio Web</label>
+                <input name="web" type="url" ng-model="nuevoEvento.sitioWeb" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="web" class="control-label">Facebook</label>
+                <input name="web" type="url" ng-model="nuevoEvento.facebook" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="descripcion" class="control-label">Descripción*</label>
+                <textarea name="descripcion" ng-model="nuevoEvento.descripcion" class="form-control" rows="3" required></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-4 form-group">
+            <button date-range-picker ng-model="datePicker.date" 
+                    options="calendarOptions" 
+                    type="button" 
+                    class="btn btn-default calendar-input" 
+                    disable-valid-styling="true" 
+                    required>
+                <span  class=" glyphicon glyphicon-calendar"/>
+            </button>
+        </div>
+
+        <div class="col-md-2 form-group">
+            <label for="fechaDesde" class="control-label">Fecha Desde</label>
+            <input name="fechaDesde" class="form-control" type="text" ng-model="fechaDesde" readonly>
+        </div>
+
+        <div class="col-md-2 form-group">
+                <label for="fechaHasta" class="control-label">Fecha Hasta</label>
+            <input name="fechaHasta" class="form-control" type="text" ng-model="fechaHasta" readonly>
+        </div>
+
+        <div class="col-md-2 form-group">
+                <label for="horaDesde" class="control-label">Hora Desde</label>
+            <input name="horaDesde" class="form-control" type="text" ng-model="horaDesde" readonly>
+        </div>
+
+        <div class="col-md-2 form-group">
+            <label for="horaHasta" class="control-label">Hora Hasta</label>
+            <input name="horaHasta" class="form-control" type="text" ng-model="horaHasta" readonly>
+        </div>
+
+        <div class="col-md-12 form-group">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div ng-dropdown-multiselect="" 
+                         options="listadoDiscapacidades" 
+                         selected-model="discapacidadesSeleccionadas" 
+                         extra-settings="multiselectConfig"
+                         translation-texts="traduccionMultiselect" 
+                         events="eventosMultiselect" 
+                         disable-valid-styling="true">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 form-group">
+                <ul style="list-style-type:none;">
+                    <li style="display: inline;margin: 0 10px 0 0;" ng ng-repeat="disc in discapacidadesSeleccionadas">
+                        <label class="label label-success">{{disc.nombre}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div ng-dropdown-multiselect="" 
+                         options="organizaciones" 
+                         selected-model="organizacionSeleccionada" 
+                         extra-settings="multiselectORGConfig"
+                         translation-texts="traduccionMultiselectORG" 
+                         events="eventosMultiselectORG" 
+                         disable-valid-styling="true">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 form-group">
+                <input class="form-control" type="text" ng-model="organizacionSeleccionada[0].nombre" readonly>
+            </div>
+
+        </div>
+
+    </div>
+    
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" type="submit">Aceptar</button>
+    <button class="btn btn-danger" ng-click="cancelar()">Cancelar</button>
+</div>
+</form>

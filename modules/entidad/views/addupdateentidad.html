@@ -1,0 +1,184 @@
+<form name="myForm"  ng-submit="validarCreacion(myForm.$valid)" novalidate="novalidate">
+	<div class="modal-header">
+			<h3 class="modal-title">Entidad</h3>
+	</div>
+	<div class="modal-body">
+		
+		<ul class="nav nav-tabs nav-justified"><!-- Cabeceras de los tabs -->
+			<li ng-class="{ active: isSet(1) }">
+			  <a href ng-click="setTab(1)">Datos Principales</a>
+			</li>
+			<li ng-class="{ active: isSet(2) }">
+			  <a href ng-click="setTab(2)">Discapacidades</a>
+			</li>
+			<li ng-class="{ active: isSet(3) }">
+			  <a href ng-click="setTab(3)">Categorías</a>
+			</li>
+		</ul>
+		
+		<div class="conteiner"><!-- Contenido de los tabs -->
+			
+			<div ng-show="isSet(1)"><!-- Aca se cargan campos Datos Principales -->
+				<div class="row">
+					<br>
+					<p class="col-md-12">Completa todos los campos con los datos de tu organización. Aquellos marcados con (*) son requeridos.</p>
+					<hr>
+					<br>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="nombre" class="control-label">Nombre*</label>
+							<input name="nombre" type="text" ng-model="nuevaEntidad.nombre" class="form-control" required>
+						</div>
+					</div>
+							
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="calle" class="control-label">Calle*</label>
+							<input name="calle" type="text" ng-model="nuevaEntidad.direccion.calle" class="form-control" required>
+						</div>
+					</div>
+							
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="numeroDireccion" class="control-label">Nro*</label>
+							<input name="numeroDireccion" type="number" ng-model="nuevaEntidad.direccion.numero" class="form-control" ng-minlength="1"
+							ng-maxlength="5" required>
+						</div>
+					</div>
+							
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="codigoPostal" class="control-label">C.Postal</label>
+							<input name="codigoPostal" type="number" ng-model="nuevaEntidad.direccion.codigoPostal" class="form-control" ng-minlength="1"
+							ng-maxlength="5">
+						</div>
+					</div>
+									
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="departamentoCalle" class="control-label">Depto</label>
+							<input name="departamentoCalle" type="text" ng-model="nuevaEntidad.direccion.depto" class="form-control">
+						</div>
+					</div>
+							
+					<div class="col-md-4">
+						<div class="form-group">
+								<label for="telefono" class="control-label">Telefono*</label>
+								<input name="telefono" type="text" ng-model="nuevaEntidad.telefono" class="form-control" ng-minlength="5"
+								ng-maxlength="15">
+						</div>
+					</div>
+							
+					<div class="col-md-4">
+						<div class="form-group">
+								<label for="telefono" class="control-label">Telefono 2</label>
+								<input name="telefonoAuxiliar"  type="text" ng-model="telefonoAuxiliar" class="form-control" ng-minlength="5"
+								ng-maxlength="15">
+						</div>
+					</div>
+									
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="email" class="control-label">Email*</label>
+							<input name="email" type="email" ng-model="nuevaEntidad.email" class="form-control" required>
+						</div>
+					</div>
+							
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="web" class="control-label">Sitio Web</label>
+							<input name="web" type="url" ng-model="nuevaEntidad.sitioWeb" class="form-control">
+						</div>
+					</div>
+									
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="descripcion" class="control-label">Descripción*</label>
+							<textarea name="descripcion" ng-model="nuevaEntidad.descripcion" class="form-control" rows="3" required></textarea>
+						</div>
+					</div>					
+				</div>
+			</div>
+			
+			<div ng-show="isSet(2)"><!-- Aca se cargan campos Discapacidades -->
+				<div class="row" >
+					<br>
+					<div class="col-md-12"><h4> Selecciona el tipo de discapacidades a las que brindas apoyo</h4></div>
+					<br>					
+					<div class="checkbox col-md-12 ">
+						<div class="jumbotron">									
+						<ul>
+							<li ng-repeat=" disc in listadoDiscapacidades">
+								<input type="checkbox" 
+									   class="form-group" 
+									   checklist-model="discapacidadesSeleccionadas" 
+									   checklist-value="disc" 
+									   disable-valid-styling="true">{{ disc.nombre }}
+							</li>
+						</ul>
+						</div>
+						<hr>
+					</div>
+
+					<div class="col-md-4"><p>Discapacidades Seleccionadas</p></div>
+					<div class="col-md-8">
+						<ul style="list-style-type:none;">
+							<li style="display: inline;margin: 0 10px 0 0;" ng ng-repeat="sel in discapacidadesSeleccionadas">
+								<label class="label label-success">{{sel.nombre}}</label>
+							</li>
+						</ul>
+					</div>
+										
+				</div>
+			</div>
+			
+			<div ng-show="isSet(3)"><!-- Aca se cargan Categorias / subcategorias -->
+				<div class="row">
+					<br>
+					<div class="col-md-12"><h4>Selecciona las Categorias y subcategorias que apoya tu organización</h4></div>
+					<br>
+				</div>
+								
+				<div class="row">
+					<br>
+					<div class="col-md-12">
+						<uib-accordion close-others="oneAtATime">
+							<div uib-accordion-group class="panel-default"  ng-repeat="cat in listadoCategoriasSubcategorias">
+								<uib-accordion-heading> {{cat.nombre}} </uib-accordion-heading>								
+								<div class="checkbox">									
+									<ul>
+										<li ng-repeat=" subc in cat.subcategorias">
+											<input type="checkbox" 
+												   class="form-group" 
+												   checklist-model="subCategoriasSeleccionadas" 
+												   checklist-value="subc" 
+												   disable-valid-styling="true">{{ subc.nombre }}
+										</li>
+									</ul>
+								</div>
+							</div>							
+						</uib-accordion>
+					</div>					
+				</div>
+				<div class="row">
+					<hr>
+					<div class="col-md-4"><p>Subcategorias Seleccionadas</p></div>
+					<div class="col-md-8">
+						<ul style="list-style-type:none;">
+							<li style="display: inline;margin: 0 10px 0 0;" ng-repeat="sel in subCategoriasSeleccionadas">
+								<label class="label label-success">{{sel.nombre}}</label>
+							</li>
+						</ul>
+					</div>
+				</div>			
+			</div>
+		 </div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="button" ng-click="anteriorTab()" ng-show="mostrarBtnAnterior">Anterior</button> <!-- Ir a la siguiente Tab -->
+		<button class="btn btn-primary" type="button" ng-click="siguienteTab()" ng-show="mostrarBtnSiguiente">Siguiente</button> <!-- Ir a la siguiente Tab -->
+		<button class="btn btn-success" type="submit">Aceptar</button>
+		<button class="btn btn-danger" type="button" ng-click="cancelar()">Cancelar</button>
+	</div>
+	</form>

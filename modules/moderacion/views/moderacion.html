@@ -1,0 +1,139 @@
+<div class="page-container moderacion-body">
+	<nav class="navbar navbar-home" >
+	<div class="">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="col-xs-1">      
+			
+		</div> 
+
+		<div class="col-xs-6 dropdown-logo">
+			<div class="col-xs-2">
+				<a href="#" class="">
+					<img ng-src="images/logoSolo.png" href="#" class="img-responsive logo-home">
+				</a>
+				<div class="dropdown-content">
+				    <a href="#/eventos">Eventos</a>
+				    <a href="#/entidades">Lugares</a>
+				    <a href="#/moderacion">Moderacion</a>
+				</div>
+			</div>
+
+			<div class="col-xs-3 dropdown">
+				<a href="#" class="dropbtn">
+					<img ng-src="images/logoTexto.png" href="#" class="img-responsive logo-texto-home">
+				</a>
+				
+			</div>						
+		</div>
+
+
+		<div class="col-xs-3">      
+			
+		</div>
+
+		<div class="col-xs-2">      
+			<button type="button" class="btn btn-default btn-lg log-in-button">
+			  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Log in
+			</button>
+		</div>   
+	</div>
+	</nav>
+	<div class="container">
+		<div class="page-header">
+			<h3 class="center">Moderación</h3>
+		</div>
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-target="#organizaciones" data-toggle="tab" >Organizaciones<i class="fa"></i></a></li>
+			<li><a data-target="#lugares" data-toggle="tab" >Lugares<i class="fa"></i></a></li>
+			<li><a data-target="#eventos" data-toggle="tab" >Eventos<i class="fa"></i></a></li>
+		</ul>
+		<div class="tab-content">
+		<div class="tab-pane active" id="organizaciones">
+			<div class="col-md-12">
+				<div class="col-md-7 h4">Organizaciones</div>
+				<div class="col-md-3 h4">Estado</div>
+				<div class="col-md-2 h4">Accion</div>
+			</div>
+			<div class="pre-scrollable col-md-12">
+				<div class="row" ng-repeat="x in listaorganizacion">
+					<hr>
+					<div class="col-xs-1 img-padding center">
+						<img ng-src="images/Shop-icon.png" class="img-responsive img-entidad">
+					</div>
+					<div class="col-xs-6">
+						<h3 class="titulo-entidad"><a class="link-entidad" ng-click="visualizarModalLugarDiscapacidad(x)">{{$index +1}}. {{x.nombre}}</a></h3>
+						<h5 class="descripcion-entidad"> Representante<span class="delim"> : </span>
+							{{x.personaRepresentante.nombre}} {{x.personaRepresentante.apellido}}</h5>
+						<h5 class="descripcion-entidad">{{x.direccion.calle}} {{x.direccion.numero}}, Ciudad de Córdoba</h5>				
+					</div>
+					<div class="col-xs-2">
+						<h3>{{x.estadoActual.estado}}</h3>
+						<h5>{{x.estadoActual.fecha}}</h5>			
+					</div>
+					<div class="col-xs-3 text-center">
+							<button type="button" ng-click="aprobar('organizacion',x)" class="btn btn-success glyphicon glyphicon-thumbs-up"></button>
+							<button type="button" ng-click="rechazar('organizacion',x)" class="btn btn-danger glyphicon glyphicon-thumbs-down"></button>				
+					</div>
+				</div>
+			</div>
+			</div>
+			<div class="tab-pane" id="lugares">
+				<div class="col-md-12">
+					<div class="col-md-7 h4">Lugar</div>
+					<div class="col-md-3 h4">Estado</div>
+					<div class="col-md-2 h4">Accion</div>
+				</div>
+				<div class="pre-scrollable col-md-12">
+					<div class="row" ng-repeat="x in listalugar">
+						<hr>
+						<div class="col-xs-1 img-padding center">
+							<img ng-src="images/Shop-icon.png" class="img-responsive img-entidad">
+						</div>
+						<div class="col-xs-6">
+							<h3 class="titulo-entidad"><a class="link-entidad" ng-click="visualizarModalLugarDiscapacidad(x)">{{$index +1}}. {{x.nombre}}</a></h3>
+							<h5 class="descripcion-entidad"> {{x.listaSubCategoriasLugar[0].categoriaLugar.nombre}} <span class="delim"> • </span>
+								{{x.listaSubCategoriasLugar[0].nombre}}</h5>
+							<h5 class="descripcion-entidad">{{x.direccion.calle}} {{x.direccion.numero}}, Ciudad de Córdoba</h5>				
+						</div>
+						<div class="col-xs-2">
+							<h3>{{x.estadoActual.estado}}</h3>
+							<h5>{{x.estadoActual.fecha}}</h5>			
+						</div>
+						<div class="col-xs-3  text-center">
+								<button type="button" ng-click="aprobar('lugar',x)" class="btn btn-success glyphicon glyphicon-thumbs-up"></button>
+								<button type="button" ng-click="rechazar('lugar',x)" class="btn btn-danger glyphicon glyphicon-thumbs-down"></button>						
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane" id="eventos">
+				<div class="col-md-12">
+					<div class="col-md-7 h4">Evento</div>
+					<div class="col-md-3 h4">Estado</div>
+					<div class="col-md-2 h4">Accion</div>
+				</div>
+			<div class="pre-scrollable col-md-12">
+					<div class="row" ng-repeat="x in listaevento">
+						<hr>
+						<div class="col-xs-1 img-padding center">
+							<img ng-src="images/Shop-icon.png" class="img-responsive img-entidad">
+						</div>
+						<div class="col-xs-6">
+	                        <h3 class="titulo-entidad"><a class="link-entidad" ng-click="visualizarModalEvento(x)">{{$index +1}}. {{x.nombre}}</a></h3>
+	                        <h5 class="descripcion-entidad">Fecha: {{x.fechaInicio}} - {{x.fechaFin}}</h5>
+	                        <h5 class="descripcion-entidad">{{x.direccion.calle}} {{x.direccion.numero}}, Ciudad de Córdoba</h5>		
+						</div>
+						<div class="col-xs-2">
+							<h3>{{x.estadoActual.estado}}</h3>
+							<h5>{{x.estadoActual.fecha}}</h5>			
+						</div>
+						<div class="col-xs-3 text-center">
+								<button type="button" ng-click="aprobar('evento',x)" class="btn btn-success glyphicon glyphicon-thumbs-up"></button>
+								<button type="button" ng-click="rechazar('evento',x)" class="btn btn-danger glyphicon glyphicon-thumbs-down"></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
