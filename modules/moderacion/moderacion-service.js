@@ -14,7 +14,7 @@ angular.module('Moderacion')
    };
 
    service.getEventos = function() {
-     return $http.get('http://localhost:8080/serviceevento/' + 'findbyestado' + '?estado='+ 'PENDIENTE');
+     return $http.get('https://cbaaccesible.herokuapp.com/serviceevento/' + 'findbyestado' + '?estado='+ 'PENDIENTE');
    };    
 
    service.aprobarOrganizacion = function(organizacion) {
@@ -26,7 +26,7 @@ angular.module('Moderacion')
    };   
 
    service.aprobarEvento = function(evento) {
-     return $http.post('http://localhost:8080/serviceevento/' + 'aprobarevento', evento);
+     return $http.post('https://cbaaccesible.herokuapp.com/serviceevento/' + 'aprobarevento', evento);
    };   
 
    service.rechazarOrganizacion = function(organizacion) {
@@ -38,7 +38,7 @@ angular.module('Moderacion')
    };   
 
    service.rechazarEvento = function(evento) {
-     return $http.post('http://localhost:8080/serviceevento/' + 'rechazarevento', evento);
+     return $http.post('https://cbaaccesible.herokuapp.com/serviceevento/' + 'rechazarevento', evento);
    }; 
 
    return service;
