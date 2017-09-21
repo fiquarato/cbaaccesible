@@ -18,7 +18,7 @@ angular.module('Eventos')
 
       var deferred = $q.defer();
       
-      $http.get('http://maps.google.com/maps/api/geocode/json?address=' + evento.direccion.calle + '+' + evento.direccion.numero + '+cordoba+argentina')
+      $http.get('https://maps.google.com/maps/api/geocode/json?address=' + evento.direccion.calle + '+' + evento.direccion.numero + '+cordoba+argentina')
         .success(function (data) {
           evento.direccion.latitud = data.results[0].geometry.location.lat;
           evento.direccion.longitud = data.results[0].geometry.location.lng;

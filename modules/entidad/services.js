@@ -16,7 +16,7 @@ angular.module('Entidad')
     
     var deferred = $q.defer();
 
-    $http.get('http://maps.google.com/maps/api/geocode/json?address=' + entidad.direccion.calle + '+' + entidad.direccion.numero + '+cordoba+argentina')
+    $http.get('https://maps.google.com/maps/api/geocode/json?address=' + entidad.direccion.calle + '+' + entidad.direccion.numero + '+cordoba+argentina')
     .success(function(data) {
       entidad.direccion.latitud = data.results[0].geometry.location.lat;
       entidad.direccion.longitud = data.results[0].geometry.location.lng;
