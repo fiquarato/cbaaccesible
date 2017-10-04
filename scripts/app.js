@@ -55,7 +55,7 @@ app.config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
         key: 'AIzaSyAZWZiCR_N7b05aQRHyQg2e08t_pX50N-I',
         v: '3.20', //defaults to latest 3.X anyhow
-        libraries: 'weather,geometry,visualization', 'places'
+        libraries: 'weather,geometry,visualization,places'
     });
 })
 
