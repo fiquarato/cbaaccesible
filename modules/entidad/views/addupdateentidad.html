@@ -1,6 +1,6 @@
 <form name="myForm"  ng-submit="validarCreacion(myForm.$valid)" novalidate="novalidate">
 	<div class="modal-header">
-			<h3 class="modal-title">Entidad</h3>
+			<h3 class="modal-title">Organización</h3>
 	</div>
 	<div class="modal-body">
 		
@@ -24,79 +24,64 @@
 					<p class="col-md-12">Completa todos los campos con los datos de tu organización. Aquellos marcados con (*) son requeridos.</p>
 					<hr>
 					<br>
-
-					<div class="col-md-4">
+					<div class="col-md-5">
+					<div class="col-md-12">
 						<div class="form-group">
 							<label for="nombre" class="control-label">Nombre*</label>
 							<input name="nombre" type="text" ng-model="nuevaEntidad.nombre" class="form-control" required>
 						</div>
-					</div>
-							
-					<div class="col-md-4">
+					</div>							
+					<div class="col-md-12">
 						<div class="form-group">
-							<label for="calle" class="control-label">Calle*</label>
-							<input name="calle" type="text" ng-model="nuevaEntidad.direccion.calle" class="form-control" required>
+							<label for="calle" class="control-label">Direccion*</label>
+							<input type="text" name="direccion" class="form-control" vs-google-autocomplete="options"				                 
+					             ng-model="nuevaEntidad.direccion.nombre"
+					             vs-place="place" 
+					             vs-street-number="nuevaEntidad.direccion.numero" 
+					             vs-street="nuevaEntidad.direccion.calle"
+					             vs-city="nuevaEntidad.direccion.ciudad"
+					             vs-state="nuevaEntidad.direccion.estado"
+					             vs-country="nuevaEntidad.direccion.pais"
+					             vs-post-code="nuevaEntidad.direccion.codigoPostal"
+					             vs-district="nuevaEntidad.direccion.departamento"
+					             vs-latitude="nuevaEntidad.direccion.latitud"
+					             vs-longitude="nuevaEntidad.direccion.longitud" required>
 						</div>
-					</div>
-							
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="numeroDireccion" class="control-label">Nro*</label>
-							<input name="numeroDireccion" type="number" ng-model="nuevaEntidad.direccion.numero" class="form-control" ng-minlength="1"
-							ng-maxlength="5" required>
-						</div>
-					</div>
-							
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="codigoPostal" class="control-label">C.Postal</label>
-							<input name="codigoPostal" type="number" ng-model="nuevaEntidad.direccion.codigoPostal" class="form-control" ng-minlength="1"
-							ng-maxlength="5">
-						</div>
-					</div>
-									
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="departamentoCalle" class="control-label">Depto</label>
-							<input name="departamentoCalle" type="text" ng-model="nuevaEntidad.direccion.depto" class="form-control">
-						</div>
-					</div>
-							
-					<div class="col-md-4">
+					</div>														
+					<div class="col-md-12">
 						<div class="form-group">
 								<label for="telefono" class="control-label">Telefono*</label>
-								<input name="telefono" type="text" ng-model="nuevaEntidad.telefono" class="form-control" ng-minlength="5"
-								ng-maxlength="15">
+								<input name="telefono" type="text" ng-model="nuevaEntidad.telefono" class="form-control" ng-minlength="7"
+								ng-maxlength="15" placeholder="0351-155612532">
 						</div>
-					</div>
-							
-					<div class="col-md-4">
-						<div class="form-group">
-								<label for="telefono" class="control-label">Telefono 2</label>
-								<input name="telefonoAuxiliar"  type="text" ng-model="telefonoAuxiliar" class="form-control" ng-minlength="5"
-								ng-maxlength="15">
-						</div>
-					</div>
-									
-					<div class="col-md-6">
+					</div>							
+					<div class="col-md-12">
 						<div class="form-group">
 							<label for="email" class="control-label">Email*</label>
 							<input name="email" type="email" ng-model="nuevaEntidad.email" class="form-control" required>
 						</div>
 					</div>
 							
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div class="form-group">
 							<label for="web" class="control-label">Sitio Web</label>
-							<input name="web" type="url" ng-model="nuevaEntidad.sitioWeb" class="form-control">
+							<input name="web" type="text" ng-pattern="/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/" ng-model="nuevaEntidad.sitioWeb" class="form-control">
 						</div>
 					</div>
-									
+					</div>		
+					<div class="col-md-7">
+						<div ng-show="logo==undefined" class="col-md-12">
+							<div ngf-drop ngf-select ng-model="logo" class="drop-box" 
+						        ngf-drag-over-class="'dragover'" ngf-multiple="flase" ngf-allow-dir="true"
+						        accept="image/*" ngf-resize="{width: 200px, height: 200px, centerCrop: true}" ngf-pattern="'image/*'">Drop images here or click to upload</div>
+	    				</div>
+	    				<img ngf-thumbnail="logo" class="image-box">
 					<div class="col-md-12">
 						<div class="form-group">
 							<label for="descripcion" class="control-label">Descripción*</label>
-							<textarea name="descripcion" ng-model="nuevaEntidad.descripcion" class="form-control" rows="3" required></textarea>
+							<textarea name="descripcion" ng-model="nuevaEntidad.descripcion" rows="3" class="form-control" required></textarea>
 						</div>
+					</div>
 					</div>					
 				</div>
 			</div>
@@ -107,27 +92,21 @@
 					<div class="col-md-12"><h4> Selecciona el tipo de discapacidades a las que brindas apoyo</h4></div>
 					<br>					
 					<div class="checkbox col-md-12 ">
-						<div class="jumbotron">									
-						<ul>
-							<li ng-repeat=" disc in listadoDiscapacidades">
-								<input type="checkbox" 
-									   class="form-group" 
-									   checklist-model="discapacidadesSeleccionadas" 
-									   checklist-value="disc" 
-									   disable-valid-styling="true">{{ disc.nombre }}
-							</li>
-						</ul>
-						</div>
-						<hr>
+						<div class="col-xs-1"></div>
+						<div class="col-xs-2" id="image{{$index+1}}" ng-repeat="disc in listadoDiscapacidades">
+							<img  src="{{disc.urlImagen}}"  ng-click="seleccionarDiscapacidad(disc)" uib-tooltip="{{disc.nombre}}">
+						</div>						
 					</div>
-
-					<div class="col-md-4"><p>Discapacidades Seleccionadas</p></div>
-					<div class="col-md-8">
-						<ul style="list-style-type:none;">
-							<li style="display: inline;margin: 0 10px 0 0;" ng ng-repeat="sel in discapacidadesSeleccionadas">
-								<label class="label label-success">{{sel.nombre}}</label>
-							</li>
-						</ul>
+					
+					<div class="col-xs-12 discapacidades-seleccionadas">
+						<div class="col-md-4"><p>Discapacidades Seleccionadas</p></div>
+						<div class="col-md-8">
+							<ul style="list-style-type:none;">
+								<li style="display: inline;margin: 0 10px 0 0;" ng ng-repeat="sel in discapacidadesSeleccionadas">
+									<label class="label label-success">{{sel.nombre}}</label>
+								</li>
+							</ul>
+						</div>
 					</div>
 										
 				</div>

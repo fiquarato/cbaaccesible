@@ -451,7 +451,7 @@ function Bootstrap3ElementModifierFn($log) {
      * @returns {bool} True if an state icon will be added to the element in the valid and invalid control
      * states.  The default is false.
      */
-    addValidationStateIcons = true,
+    addValidationStateIcons = false,
 
     /**
      * @ngdoc function
@@ -655,7 +655,7 @@ angular.autoValidate = angular.autoValidate || {
 };
 
 angular.autoValidate.errorMessages['default'] = {
-  defaultMsg: "Agrege el mensaje de error para {0}",
+  defaultMsg: "",
   email: "Correo no válido",
   minlength: "Inserte almenos {0} caracteres",
   maxlength: "Has ingresado más del número {0} de caracteres permitidos {0}",

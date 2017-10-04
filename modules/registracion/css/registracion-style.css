@@ -1,0 +1,35 @@
+ .registracion-header {
+ 	background-color: #337ab7;
+ 	color: white;
+ }
+
+ .persona-form {
+ 	margin-bottom: 7px;
+ }
+
+ .img-registracion {
+ 	height: 170px;
+ }
+
+ .img-registracion-persona {
+ 	height: 210px;
+ 	margin-top: 36px;
+ }
+
+ .left-container-registracion { 	
+/* 	border-right: 1px dashed darkgrey;*/
+ 	height: 45vh;
+ }
+
+ .right-container-registracion {
+ 	height: 45vh;
+ }
+
+ .registracion-body {
+ 	height: 50vh;
+ 	text-align: center;
+ }
+
+.titulo-tipo-registracion {
+	margin-top: 2px;
+}

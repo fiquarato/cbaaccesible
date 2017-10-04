@@ -15,23 +15,7 @@ angular.module('Eventos')
     };
 
     service.cargarEvento = function( evento ){
-
-      var deferred = $q.defer();
-      
-      $http.get('https://maps.google.com/maps/api/geocode/json?address=' + evento.direccion.calle + '+' + evento.direccion.numero + '+cordoba+argentina')
-        .success(function (data) {
-          evento.direccion.latitud = data.results[0].geometry.location.lat;
-          evento.direccion.longitud = data.results[0].geometry.location.lng;
-          $http.post($rootScope.eventosService + 'saveevento', evento ).success(function (data) {
-            deferred.resolve();
-          });
-        })
-        .error(function (err) {
-          deferred.reject(err)
-        });
-
-      return deferred.promise;
-
+      return $http.post($rootScope.eventosService + 'saveevento', evento );
     };
 
     service.buscarEventoAvanzada = function(texto, discapacidades, fechaDesde, fechaHasta) {
@@ -39,5 +23,9 @@ angular.module('Eventos')
       	'&nombresTipoDiscapacidad='+ discapacidades + '&fechaDesde=' + fechaDesde + '&fechaHasta=' + fechaHasta);
     };
 
+    service.getOrganizaciones = function(){
+      return $http.get($rootScope.organizacionService + 'findall');
+    };
+    
     return service;
 });

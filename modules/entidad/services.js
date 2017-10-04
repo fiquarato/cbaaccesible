@@ -2,44 +2,28 @@
 
 angular.module('Entidad')
 .factory('EntidadService',
-  function ($http, $rootScope, $q) {
+  function ($http, $rootScope, $q){
 
     var service = {};
     
-    service.getEntidades = function() {
-/*     return $http.get($rootScope.entidadService + 'findall');  LLAMADA AL SERVICIO PARA QUE TRAIGA TODOS LOS LUGARES*/
-     return $http.get($rootScope.entidadService + 'findbyestado?estado=APROBADO');
-     
-   };
-
-   service.crearEntidad = function(entidad) {
-    
-    var deferred = $q.defer();
-
-    $http.get('https://maps.google.com/maps/api/geocode/json?address=' + entidad.direccion.calle + '+' + entidad.direccion.numero + '+cordoba+argentina')
-    .success(function(data) {
-      entidad.direccion.latitud = data.results[0].geometry.location.lat;
-      entidad.direccion.longitud = data.results[0].geometry.location.lng;
-      $http.post($rootScope.entidadService + 'savelugar', entidad).success(function(data){
-        deferred.resolve();
-      });
-    })
-    .error(function(err) {
-      deferred.reject(err)
-    });
-
-    return deferred.promise;
-  }
-  service.eliminarEntidad = function(id) {
-    return $http.get($rootScope.entidadService + 'deletebyid' + '?id='+ id);
+  service.getEntidades = function(){
+    return $http.get($rootScope.organizacionService + 'findbyestado?estado=APROBADO');
   };
 
-  service.buscarEntidad = function(nombre) {
-    return $http.get($rootScope.entidadService + 'findbynombre' + '?nombre='+ nombre);
+  service.crearEntidad = function(entidad){
+    return $http.post($rootScope.organizacionService + 'saveorganizacion', entidad);
+  };
+  
+  service.eliminarEntidad = function(id){
+    return $http.get($rootScope.organizacionService + 'deletebyid' + '?id='+ id);
   };
 
-  service.buscarEntidadAvanzada = function(nombre, discapacidad, categoria) {
-    return $http.get($rootScope.entidadService + 'busquedaavanzada' + '?textoBusqueda='+ nombre + '&nombresTipoDiscapacidad='+ discapacidad + '&nombresCategorias=' + categoria);
+  service.buscarEntidad = function(nombre){
+    return $http.get($rootScope.organizacionService + 'findbynombre' + '?nombre='+ nombre);
+  };
+
+  service.buscarEntidadAvanzada = function(nombre, discapacidad, categoria){
+    return $http.get($rootScope.organizacionService + 'busquedaavanzada' + '?textoBusqueda='+ nombre + '&nombresTipoDiscapacidad='+ discapacidad + '&nombresCategorias=' + categoria);
   };
 
   service.getDiscapacidades = function(){

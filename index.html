@@ -13,13 +13,15 @@
   <link rel="stylesheet" href="css/angular-ui-notification.min.css">
   <link rel="stylesheet" href="css/hover.css" >
   <link rel="stylesheet" href="css/animate.css"> <!--Para animar componentes https://daneden.github.io/animate.css/ -->
+  <link rel="stylesheet" href="modules/log-in/css/log-in-style.css"> <!-- estilo del log in -->
+  <link rel="stylesheet" href="modules/registracion/css/registracion-style.css"> <!-- estilo del modulo registracion -->
 
   <script src="libs/jquery-3.2.1.min.js"></script>
   <script src="libs/bootstrap/js/bootstrap.min.js"></script>
   <script src="libs/angularjs/angular.min.js"></script>
   <script src="libs/angularjs/angular-animate.min.js"></script>
   <script src="libs/angularjs/angular-route.min.js"></script>
-  <script src="libs/angularjs/angular-resource.min.js"></script>
+  <script src="libs/angularjs/angular-locale_es-ar.js"></script>
   <!-- <script src="libs/ui-bootstrap-tpls-1.3.3.min.js"></script> -->
   <script src="libs/bootstrap/ui-bootstrap-tpls-2.5.0.min.js"></script>
   <script src="libs/angularjs/angular-cookies.min.js"></script>
@@ -32,13 +34,16 @@
   <script src="libs/jcs-auto-validate.js"></script> <!-- PARA AUTOVALIDAR CAMPOS DE FORMULARIOS http://jonsamwell.github.io/angular-auto-validate/ -->
   <script src="libs/checklist-model.js"></script> <!-- https://vitalets.github.io/checklist-model/ -->
   <script src="libs/angular-google-maps.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZWZiCR_N7b05aQRHyQg2e08t_pX50N-I" async defer></script>
+  <script src="libs/vs-google-autocomplete.js"></script>
+  <script src="http://maps.googleapis.com/maps/api/js?libraries=places&language=es?key=AIzaSyAZWZiCR_N7b05aQRHyQg2e08t_pX50N-I"></script>
 
   <!-- Calendario DatePicker ////      https://github.com/fragaria/angular-daterangepicker    -->
   <script src="libs/angular-daterangepicker-master/moment.min.js"></script>
   <script src="libs/angular-daterangepicker-master/daterangepicker.js"></script>
   <script src="libs/angular-daterangepicker-master/angular-daterangepicker.min.js"></script>
   <link rel="stylesheet" href="libs/angular-daterangepicker-master/daterangepicker.css">
+
+  <script type="text/javascript" src="libs/ng-file-upload.min.js"></script>
 
 
 
@@ -56,6 +61,14 @@
 
   <script src="modules/moderacion/moderacion-controller.js"></script>    
   <script src="modules/moderacion/moderacion-service.js"></script>
+
+  <script src="modules/log-in/log-in-controller.js"></script>    
+  <script src="modules/log-in/log-in-service.js"></script>
+
+  <script src="modules/registracion/registracion-controller.js"></script>    
+  <script src="modules/registracion/registracion-service.js"></script>
+
+
 
 
 </head>

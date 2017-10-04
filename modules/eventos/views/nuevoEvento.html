@@ -8,7 +8,7 @@
 <div class="modal-body">
 
     <div class="row">
-
+        <div class="col-md-6">
         <div class="col-md-12">
             <div class="form-group">
                 <label for="nombre" class="control-label">Nombre*</label>
@@ -16,56 +16,46 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-12">
             <div class="form-group">
-                <label for="calle" class="control-label">Calle*</label>
-                <input name="calle" type="text" ng-model="nuevoEvento.direccion.calle" class="form-control" required>
+                <label for="calle" class="control-label">Direccion</label>
+                <input type="text" name="direccion" class="form-control" vs-google-autocomplete="options"				                 
+                     ng-model="nuevoEvento.direccion.nombre"
+                     vs-place="place" 
+                     vs-street-number="nuevoEvento.direccion.numero" 
+                     vs-street="nuevoEvento.direccion.calle"
+                     vs-city="nuevoEvento.direccion.ciudad"
+                     vs-state="nuevoEvento.direccion.estado"
+                     vs-country="nuevoEvento.direccion.pais"
+                     vs-post-code="nuevoEvento.direccion.codigoPostal"
+                     vs-district="nuevoEvento.direccion.departamento"
+                     vs-latitude="nuevoEvento.direccion.latitud"
+                     vs-longitude="nuevoEvento.direccion.longitud">
             </div>
         </div>
-
-        <div class="col-md-2">
-            <div class="form-group">
-                <label for="numeroDireccion" class="control-label">Nro*</label>
-                <input name="numeroDireccion" type="number" ng-model="nuevoEvento.direccion.numero" class="form-control" ng-minlength="1"
-                    ng-maxlength="5" required>
-            </div>
-        </div>
-
-        <div class="col-md-2">
-            <div class="form-group">
-                <label for="codigoPostal" class="control-label">C.Postal</label>
-                <input name="codigoPostal" type="number" ng-model="nuevoEvento.direccion.codigoPostal" class="form-control" ng-minlength="1"
-                    ng-maxlength="5">
-            </div>
-        </div>
-
-        <div class="col-md-2">
-            <div class="form-group">
-                <label for="departamentoCalle" class="control-label">Depto</label>
-                <input name="departamentoCalle" type="text" ng-model="nuevoEvento.direccion.depto" class="form-control">
-            </div>
-        </div>
-
-        <div class="col-md-2">
-            <div class="form-group">
-                <label for="precio" class="control-label">Precio</label>
-                <input name="precio" type="text" ng-model="nuevoEvento.precio" class="form-control" required>
-            </div>
-        </div>
-
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
                 <label for="web" class="control-label">Sitio Web</label>
-                <input name="web" type="url" ng-model="nuevoEvento.sitioWeb" class="form-control">
+                <input name="web" ng-pattern="/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/" ng-model="nuevoEvento.sitioWeb" class="form-control">
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
                 <label for="web" class="control-label">Facebook</label>
-                <input name="web" type="url" ng-model="nuevoEvento.facebook" class="form-control">
+                <input name="web" ng-pattern="/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/" ng-model="nuevoEvento.facebook" class="form-control">
             </div>
         </div>
+    </div>
+    <div class="col-md-6">
+
+            <div ng-show="logo==undefined" class="col-md-12">
+            <div ngf-drop ngf-select ng-model="logo" class="drop-box" 
+                ngf-drag-over-class="'dragover'" ngf-multiple="flase" ngf-allow-dir="true"
+                accept="image/*" ngf-resize="{width: 200px, height: 200px, centerCrop: true}" ngf-pattern="'image/*'">Drop images here or click to upload</div>
+        </div>
+        <img ngf-thumbnail="logo" class="image-box">
+    </div>
 
         <div class="col-md-12">
             <div class="form-group">
@@ -74,37 +64,71 @@
             </div>
         </div>
 
-        <div class="col-md-4 form-group">
-            <button date-range-picker ng-model="datePicker.date" 
-                    options="calendarOptions" 
-                    type="button" 
-                    class="btn btn-default calendar-input" 
-                    disable-valid-styling="true" 
-                    required>
-                <span  class=" glyphicon glyphicon-calendar"/>
-            </button>
-        </div>
+        <div class="col-md-12 form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Inicio</h4>
+                    <p class="input-group">
+                        <input type="text" class="form-control" 
+                               uib-datepicker-popup="{{format}}" 
+                               ng-model="dt" 
+                               is-open="popup1.opened" 
+                               datepicker-options="dateOptions"
+                               show-button-bar="false"
+                               ng-change="fechaInicioSeleccionada()"
+                               />
+                        <span class="input-group-btn">
+                           <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+                <div class="col-md-1">Hora inicio:</div>
+                <div class="col-md-2">                    
+                    <div uib-timepicker 
+                         ng-model="mytime" 
+                         ng-change="changed()" 
+                         hour-step="hstep" 
+                         minute-step="mstep" 
+                         show-meridian="ismeridian">
+                    </div>
+                </div>
+                <div class="col-md-3" ng-hide="verFinalizacion"><a ng-click="mostrarFinalizacion()">+ Fecha de finalización</a></div>
 
-        <div class="col-md-2 form-group">
-            <label for="fechaDesde" class="control-label">Fecha Desde</label>
-            <input name="fechaDesde" class="form-control" type="text" ng-model="fechaDesde" readonly>
-        </div>
+                <div class="col-md-12"><hr></div>
+            </div>
 
-        <div class="col-md-2 form-group">
-                <label for="fechaHasta" class="control-label">Fecha Hasta</label>
-            <input name="fechaHasta" class="form-control" type="text" ng-model="fechaHasta" readonly>
-        </div>
+            <div class="row" ng-show="verFinalizacion">
+                <div class="col-md-6">
+                    <h4>Finalización</h4>
+                    <p class="input-group">
+                        <input type="text" class="form-control" 
+                               uib-datepicker-popup="{{format2}}" 
+                               ng-model="dt2" 
+                               is-open="popup2.opened" 
+                               datepicker-options="dateOptions2"
+                               show-button-bar="false"/>
+                        <span class="input-group-btn">
+                           <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+                <div class="col-md-1">Hora fin:</div>
+                <div class="col-md-2">                    
+                    <div uib-timepicker 
+                         ng-model="mytime2" 
+                         ng-change="changed2()" 
+                         hour-step="hstep" 
+                         minute-step="mstep" 
+                         show-meridian="ismeridian">
+                    </div>
+                </div>
+                <div class="col-md-3"><a ng-click="quitarFechaFin()">- Quitar finalización </a></div>
 
-        <div class="col-md-2 form-group">
-                <label for="horaDesde" class="control-label">Hora Desde</label>
-            <input name="horaDesde" class="form-control" type="text" ng-model="horaDesde" readonly>
+                <div class="col-md-12"><hr></div>
+                
+            </div>
         </div>
-
-        <div class="col-md-2 form-group">
-            <label for="horaHasta" class="control-label">Hora Hasta</label>
-            <input name="horaHasta" class="form-control" type="text" ng-model="horaHasta" readonly>
-        </div>
-
+       
         <div class="col-md-12 form-group">
             <div class="col-md-4">
                 <div class="form-group">
@@ -141,14 +165,20 @@
                 </div>
             </div>
 
-            <div class="col-md-3 form-group">
-                <input class="form-control" type="text" ng-model="organizacionSeleccionada[0].nombre" readonly>
+            <div class="col-md-4">
+                <p>¿ La Organización no esta en la lista ? Sugerí una nueva organización</p>
             </div>
+
+            <div class="col-md-2">
+                <button type="button" class="btn icon-btn " ng-click="abrirModalNuevaOrganizacion()" uib-tooltip="Alta Nueva Organización" tooltip-placement="bottom">                 
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button> 
+            </div>
+            
 
         </div>
 
     </div>
-    
 
 </div>
 <div class="modal-footer">

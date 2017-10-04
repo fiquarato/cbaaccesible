@@ -1,12 +1,19 @@
 'use strict';
 angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENTO
     .controller('PrincipalEventosController',
-    function ($scope, EventosService, $confirm, $filter, $uibModal, $anchorScroll, $location, Notification) {
+    function ($scope, EventosService, $confirm, $filter, $uibModal, $anchorScroll, $location, Notification, $rootScope) {
 
         //Variables Scope
         $scope.buscador = '';
         $scope.discapacidades = [];
         $scope.listado = []; // Listado de Eventos que se muestra en la pagina
+
+        $scope.listadoEventosFuturos = [];
+        $scope.listadoEventosPasados = [];
+
+        $scope.markersPasados = [];
+        $scope.markersFuturos = [];
+
         $scope.listadoDiscapacidades = [];
         $scope.discapacidadesSeleccionadas = [];
         $scope.discapacidadesSeleccionadasFormateadas = [];
@@ -100,25 +107,51 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
 
         $scope.loadMarkers = function () {   //MARCA LOS PUNTOS EN EL MAPA DEL ARRAY LISTADO
             var aux;
-            var arrayMarkers = [];
+            var auxFuturos = 0;
+            var auxPasados = 0;
+            var auxMarkers, icons;
             $scope.markers = [];
+            $scope.markersFuturos = [];
+
             for (var i = 0; i < $scope.listado.length; i++) {
-                if (i >= 9) { aux = '7 38' } else { aux = '3 38' };
-                var ret = {
-                    id: $scope.listado[i].id,
-                    latitude: $scope.listado[i].direccion.latitud,
-                    longitude: $scope.listado[i].direccion.longitud,
-                    title: $scope.listado[i].nombre,
-                    descripcion: $scope.listado[i].direccion.calle + ' ' + $scope.listado[i].direccion.numero,
-                    icon: '/images/map_marker64.ico',
-                    options: {
-                        labelContent: i + 1,
-                        labelAnchor: aux
-                    },
-                };
-                arrayMarkers.push(ret);
+                
+                if (!$scope.listado[i].finalizado) {
+                    auxFuturos++;
+                    auxMarkers = auxFuturos;
+                    icons = '/images/map_marker64.ico';
+                } else {
+                    auxPasados++;
+                    auxMarkers = auxPasados;
+                    icons = '/images/map-markerRED.ico';
+                }
+                
+                if($scope.listado[i].direccion!=null){
+
+                    if (i >= 9) { aux = '7 38' } else { aux = '3 38' };
+
+                    
+                    var ret = {
+                        id: $scope.listado[i].id,
+                        latitude: $scope.listado[i].direccion.latitud,
+                        longitude: $scope.listado[i].direccion.longitud,
+                        title: $scope.listado[i].nombre,
+                        descripcion: $scope.listado[i].direccion.calle + ' ' + $scope.listado[i].direccion.numero,
+                        icon: icons,
+                        options: {
+                            labelContent: auxMarkers,
+                            labelAnchor: aux
+                        },
+                    };
+                    if (!$scope.listado[i].finalizado) {
+                        $scope.markersFuturos.push(ret);
+                    } else {
+                        $scope.markersPasados.push(ret);
+                    }
+                    
+                } 
+                
             };
-            $scope.markers = arrayMarkers;
+            $scope.markers = $scope.markersFuturos;
         };
 
         $scope.showWindowClick = function (marker, eventName, model) {
@@ -140,7 +173,7 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
             $anchorScroll();
             $location.hash(location);
             var div = $('#anchorSon'+idShowingClick);
-            div.css('backgroundColor', '#3f586c');
+            div.css('backgroundColor', '#337ab7');
             div.children("*").children("*").children("*").css('color', 'white');
             div.children("*").children("*").children("*").children("*").css('color', 'white');
 
@@ -189,7 +222,7 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
                 idShowingClick = marker.id;
                 marker.show = true;
                 var div = $('#anchorSon'+idMarker);
-                div.css('backgroundColor', '#3f586c');
+                div.css('backgroundColor', '#337ab7');
                 div.children("*").children("*").children("*").css('color', 'white');
                 div.children("*").children("*").children("*").children("*").css('color', 'white');
             }
@@ -245,8 +278,40 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
             }
         };
 
-        var cargarEventos = function () { //Trae Eventos del BE
+        $scope.mostrarEventosPasados = function() {
+            if($scope.flagShowEvents){
+                $scope.flagShowEvents = false;
+                $scope.markers = $scope.markersFuturos;
+            }else {
+                $scope.flagShowEvents = true;   
+                //$scope.markers.concat($scope.markersPasados); 
+            }
+            
+        };
+
+        var generarListaEventosPasados = function() {
+            $scope.listadoEventosPasados= [];
+            $scope.listadoEventosFuturos= [];
+            
            
+            for(var i = 0; i < $scope.listado.length; i++) {
+                if (!$scope.listado[i].finalizado) {
+                    $scope.listadoEventosFuturos.push($scope.listado[i]);
+                }else if ($scope.listado[i].finalizado) {
+                         $scope.listadoEventosPasados.push($scope.listado[i]);
+                }
+            }
+        };
+
+        var generarFlag = function () {
+            if ($scope.listadoEventosFuturos.length == 0 && $scope.listadoEventosPasados.length > 0 ) {
+                $scope.flagShowEvents = true;
+            } else {
+                $scope.flagShowEvents = false;
+            }
+        };
+
+        var cargarEventos = function () { //Trae Eventos del BE
             var promesaEventos;
             var promiseDisc = EventosService.getEventos(); //TRAIGO LOS EVENTOS APROBADOS DEL BE
             promesaEventos = promiseDisc;
@@ -254,6 +319,8 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
                 function (response) {
                     $scope.listado = response.data;
                     hayEventos = true;
+                    generarListaEventosPasados();
+                    generarFlag();
                     $scope.cargaImagenesEntidad();
                     $scope.loadMarkers();
                 },
@@ -300,7 +367,6 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
             };
 
         $scope.filtrar = function( texto, discapacidades, fechaDesde, fechaHasta ){
-            
             formatearDiscapacidad();
             if (texto == '' && $scope.discapacidadesSeleccionadasFormateadas.length == 0 && fechaDesde == '' && fechaHasta == '') {
                 iniciar();
@@ -310,6 +376,8 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
                 $scope.miPromesa.then(
                   function(response){
                     $scope.listado = response.data;
+                    generarListaEventosPasados();
+                    generarFlag();
                     $scope.cargaImagenesEntidad();
                     $scope.loadMarkers();
                   }, function(error) {
@@ -326,12 +394,16 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
         };
 
         $scope.abrirModalNuevoEvento = function () {
-                var modalInstance = $uibModal.open({
-                    templateUrl: 'modules/eventos/views/nuevoEvento.html',
-                    controller: 'NuevoEventoController',
-                    size: 'lg' //'lg' para large, 'md' para medium y 'sm' para small
-                });
-            };
+            if ($rootScope.usuarioLogged == undefined) {
+                $scope.visualizarModalLogIn();
+            }else {
+                    var modalInstance = $uibModal.open({
+                        templateUrl: 'modules/eventos/views/nuevoEvento.html',
+                        controller: 'NuevoEventoController',
+                        size: 'lg' //'lg' para large, 'md' para medium y 'sm' para small
+                    });   
+            }
+        };
 
         $scope.visualizarModalEvento = function(evento) { //SE ABRE EL MODAL PARA VISUALIZAR UN LUGAR
             var modalInstance = $uibModal.open({
@@ -345,6 +417,24 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
                 size: 'lg' //'lg' para large, 'md' para medium y 'sm' para small
               });
           };
+
+          $scope.visualizarModalLogIn = function() { //SE ABRE EL MODAL PARA VISUALIZAR UN LUGAR
+              var modalInstance = $uibModal.open({
+                templateUrl: 'modules/log-in/views/log-in.html',
+                controller: 'LogInController',
+                resolve: {
+                  init: function(){
+                    return $scope.init;
+                  }
+                },
+                  size: 'sm' //'lg' para large, 'md' para medium y 'sm' para small
+                });
+            };
+
+         $scope.logOut = function() {
+          $rootScope.usuarioLogged = undefined;
+        };
+
 
         // Ejecucion de Metodos inciales
         iniciar();
@@ -366,65 +456,118 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
 
     angular.module('Eventos')
     .controller('NuevoEventoController',
-        function ($scope, EventosService, $uibModalInstance, Notification) {
+        function ($scope, EventosService, $uibModalInstance, Upload, Notification,  $uibModal, $rootScope) {
+
+            $scope.options = {
+                componentRestrictions: { country: 'AR' }
+                };
 
             $scope.nuevoEvento = {};
-
-            $scope.fechaDesde = null;
-            $scope.fechaHasta = null;
-            $scope.horaDesde = null;
-            $scope.horaHasta = null;
             $scope.listadoDiscapacidades = [];
             $scope.discapacidadesSeleccionadas = [];
             $scope.organizaciones = [];
             $scope.organizacionSeleccionada = [];
+            $scope.verFinalizacion = false;
+            $scope.dt = null;
+            $scope.selInicio = false;
+            $scope.dt2 = null;
+            $scope.selFinalizacion = false;
+            $scope.format = "dd/MM/yyyy";
+            $scope.format2 = "dd/MM/yyyy";
+            $scope.hstep = 1;
+            $scope.mstep = 15;
 
-            //Datepicket
-            $scope.datePicker = {};
-            $scope.datePicker.date = {
-                startDate: null,
-                endDate: null
+            //Datepicker1
+
+            $scope.today = function () {
+                $scope.dt = new Date();
+                $scope.dt.setHours(12);
+                $scope.dt.setMinutes(0);
+            };            
+
+            $scope.inlineOptions = {
+                minDate: new Date(),
+                showWeeks: true,
             };
-            $scope.calendarOptions = { //
-                applyClass: 'btn-green',
-                alwaysShowCalendars: true, // Desactivar para que no se muestre siempre el calendario
-                autoApply: true, // Desactivar para que no se aplique automaticamente
-                opens: "right",
-                drops: "up",
-                timePicker: true,
-                timePicker24Hour: true,
-                locale: {
-                    applyLabel: "Aceptar",
-                    fromLabel: "Desde",
-                    format: "HH:mm - DD/MM/YYYY",
-                    toLabel: "Hasta",
-                    cancelLabel: 'Cancelar',
-                    customRangeLabel: 'Ingresa un Rango',
-                    applyClass: 'btn-green',
-                    daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                    firstDay: 1,
-                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre',
-                        'Octubre', 'Noviembre', 'Diciembre'
-                    ]
-                },
-                eventHandlers: {
-                    'apply.daterangepicker': function () {
-                        $scope.fechaDesde = $scope.datePicker.date.startDate.format('DD/MM/YYYY');
-                        $scope.fechaHasta = $scope.datePicker.date.endDate.format('DD/MM/YYYY');
-                        
-                        $scope.horaDesde = $scope.datePicker.date.startDate.format('HH:mm');
-                        $scope.horaHasta = $scope.datePicker.date.endDate.format('HH:mm');
 
-                        $scope.nuevoEvento.fechaInicio = $scope.datePicker.date.startDate.format( 'HH:mm DD/MM/YYYY');
-                        $scope.nuevoEvento.fechaFin = $scope.datePicker.date.endDate.format( 'HH:mm DD/MM/YYYY');
-                    }
-                }
-            };  
+            $scope.dateOptions = {
+                showWeeks: false,
+                formatYear: 'yyyy',
+                maxDate: new Date(2050, 5, 22),
+                minDate: new Date(),
+                startingDay: 1
+            };
+
+            $scope.open1 = function () {
+                $scope.popup1.opened = true;
+            };            
+
+            $scope.popup1 = {
+                opened: false
+            };
+            
+            $scope.fechaInicioSeleccionada = function(){
+                $scope.selInicio = true;
+                $scope.dateOptions2.minDate = $scope.dt;
+                $scope.dt2 = $scope.dt;
+                                          
+            };
+
+             //Datepicker 2 
+
+             $scope.today2 = function () {
+                $scope.dt2 = new Date();
+                $scope.dt2.setHours(12);
+                $scope.dt2.setMinutes(0);
+            };            
+
+            $scope.inlineOptions2 = {
+                minDate: new Date(),
+                showWeeks: true
+            };
+
+            $scope.dateOptions2 = {
+                showWeeks: false,
+                formatYear: 'yyyy',
+                maxDate: new Date(2050, 5, 22),
+                minDate: new Date(),
+                startingDay: 1
+            };
+
+
+            $scope.open2 = function () {
+                $scope.popup2.opened = true;
+            };
+
+            $scope.popup2 = {
+                opened: false
+            };
+            
+            // TIMEPICKER 1
+
+            $scope.mytime = new Date();
+            $scope.mytime.setHours(12);
+            $scope.mytime.setMinutes(0);
+            
+            $scope.changed = function () { // actualiza cuando cambia time picker Inicio
+               $scope.dt.setHours($scope.mytime.getHours());
+                $scope.dt.setMinutes($scope.mytime.getMinutes());              
+            };
+
+            // TIMEPICKER 2
+
+            $scope.mytime2 = new Date();
+            $scope.mytime2.setHours(12);
+            $scope.mytime2.setMinutes(0);
+            
+            $scope.changed2 = function () { // actualiza cuando cambia time picker finalizacion
+                $scope.dt2.setHours($scope.mytime2.getHours());
+                $scope.dt2.setMinutes($scope.mytime2.getMinutes());
+            };
 
             //Multiselect Discapacidades
             $scope.multiselectConfig = {
                 displayProp: 'nombre',
-                
             };
             $scope.traduccionMultiselect = {
                 buttonDefaultText: "Discapacidades",
@@ -434,9 +577,19 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
             };
             $scope.eventosMultiselect = {
                 onSelectionChanged: function () {
-                    $scope.nuevoEvento.listaTiposDiscapacidad = $scope.discapacidadesSeleccionadas;                  
+                    $scope.nuevoEvento.listaTiposDiscapacidad = $scope.discapacidadesSeleccionadas;
                 }
             };
+
+            $scope.mostrarFinalizacion = function () {
+                $scope.verFinalizacion = !$scope.verFinalizacion;
+            };
+
+            $scope.quitarFechaFin = function(){
+                $scope.selFinalizacion = false;
+                $scope.verFinalizacion = false;
+                $scope.dt2 = $scope.dt;                
+            };           
 
             // Multiselect Organizacion
 
@@ -446,37 +599,60 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
                 showCheckAll: false,
                 showUncheckAll: false,
                 buttonClasses: 'btn btn-success',
-                dynamicTitle: false,
-                closeOnSelect: true        
+                dynamicTitle: true,
+                closeOnSelect: true,
+                searchField: 'nombre',
+                enableSearch: true,
+                styleActive: true,
+                smartButtonMaxItems: 1,
+                smartButtonTextConverter: function(itemText, originalItem) { 
+                    return itemText;
+                }
             };
             $scope.traduccionMultiselectORG = {
-                buttonDefaultText: "Organizaciones",                
-            };
+                buttonDefaultText: "Organizaciones",
+                searchPlaceholder: "Buscar...",
+                dynamicButtonTextSuffix : "seleccionado"
+            };            
 
             $scope.eventosMultiselectORG = {
                 onSelectionChanged: function () {
-                   // $scope.nuevoEvento.organizador = $scope.organizacionSeleccionada[0];        
+                    $scope.nuevoEvento.organizador = $scope.organizacionSeleccionada[0];
                 }
             };
 
-            var cargarOrganizaciones = function(){
+            $scope.visualizarModalLogIn = function() { //SE ABRE EL MODAL PARA VISUALIZAR UN LUGAR
+                var modalInstance = $uibModal.open({
+                  templateUrl: 'modules/log-in/views/log-in.html',
+                  controller: 'LogInController',
+                  resolve: {
+                    init: function(){
+                      return $scope.init;
+                    }
+                  },
+                    size: 'sm' //'lg' para large, 'md' para medium y 'sm' para small
+                  });
+              };
 
-                var org = [                    
-                    { 
-                        id: 1,
-                        nombre: "Tarjeta Naranja",
+            var cargarOrganizaciones = function () {
+                
+                var promesaOrganizaciones;
+                var promiseOrg = EventosService.getOrganizaciones(); //TRAIGO LAS DISCAPACIDADES DEL BE
+                promesaOrganizaciones = promiseOrg;
+                promesaOrganizaciones.then(
+                    function (response) {
+                        $scope.organizaciones = response.data;
                     },
-                    { 
-                        id: 2,
-                        nombre: "Municipalidad de CBA",
-                    },
-                    { 
-                        id: 3,
-                        nombre: "Cilsa",
-                    }                    
-                ];
-
-               $scope.organizaciones = org;
+                    function (error) {
+                        $scope.organizaciones = [];
+                        
+                        Notification.error({
+                            message: 'Ocurrio un error al cargar el listado de Orgaizaciones',
+                            delay: 3000,
+                            replaceMessage: true
+                        });
+                    }
+                );                
             };
 
             var cargarDiscapacidades = function () { // Trae Discapacidades del BE y las carga en lista
@@ -498,44 +674,56 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
             };
 
             $scope.validarCreacion = function (formulario) { // Valida que el formulario este correcto y que haya al menos una discapacidad.
-
-                if( formulario == true){
-                  if( $scope.discapacidadesSeleccionadas.length > 0 && $scope.organizacionSeleccionada > 0 ){
-                      if( $scope.fechaDesde != null && $scope.fechaHasta != null 
-                        && $scope.horaDesde == null && $scope.horaHasta == null ){
-                            console.log("Hola Manola");
-                      }
-                  }
-                }
-
+                //No imppementado todavia
                 crearEvento();
-                
             };
 
-            var crearEvento = function(){
+            var crearEvento = function () {
 
-                $scope.nuevoEvento.id = 0;
+                var momIn = moment($scope.dt);
+                var momFn = moment($scope.dt2);
+                
+                $scope.nuevoEvento.fechaInicio = momIn.format("HH:mm DD/MM/YYYY");
+                $scope.nuevoEvento.fechaFin = momFn.format("HH:mm DD/MM/YYYY");
 
                 var miPromesa = EventosService.cargarEvento($scope.nuevoEvento);
                 miPromesa.then(
                     function (response) {
+
+                        Upload.upload({
+                              url: 'https://cbaaccesible.herokuapp.com/serviceevento/uploadimageprofile',
+                              fields: {'idEvento': response.data.id}, // additional data to send
+                              file: $scope.logo
+                          });  
                         $scope.cancelar();
-                        Notification.success({ message: 'El Evento se creó correctamente', delay: 3000 });
-                    }, function (error) {
+                        Notification.success({
+                            message: 'El Evento se creó correctamente',
+                            delay: 3000
+                        });
+                    },
+                    function (error) {
                         if (error.data.message) {
-                            Notification.error({ message: error.data.message, delay: 3000 });
+                            Notification.error({
+                                message: error.data.message,
+                                delay: 3000
+                            });
                         } else {
-                            Notification.error({ message: 'Ocurrio un error al cargar el Evento', delay: 3000 });
+                            Notification.error({
+                                message: 'Ocurrio un error al cargar el Evento',
+                                delay: 3000
+                            });
                         }
-                    });                
+                    });
+                
             };
 
             $scope.cancelar = function () {
                 $uibModalInstance.dismiss('cancelar');
             };
-          
-            //Metodos que se ejecutan al abrir el modal
-            cargarDiscapacidades();
-            cargarOrganizaciones();
 
+            //Metodos que se ejecutan al abrir el modal
+            $scope.today();
+            $scope.today2();
+            cargarDiscapacidades();
+            cargarOrganizaciones();            
         });

@@ -1,0 +1,75 @@
+<div class="modal-header log-in-header">
+	<h3 class="omb_authTitle">Moderación de {{elemento.nombre}}</h3>
+</div>
+	<div class="modal-body">
+    
+
+    <div class="omb_login">
+    	<form class="omb_loginForm" name="myForm" autocomplete="off" method="POST" ng-submit="crearNuevoEstado(elemento.id)">
+
+		<div class="col-xs-12">
+		
+				<div class="input-group form-group moderacion-form col-xs-12">
+					<input  type="text" class="form-control " name="phone" ng-model="comentarioNuevo" 
+					 placeholder="Escribe un comentario..." required>
+				</div>	
+
+				<div class="form-group ddl-moderacion">					
+						<select class="form-control" id="estado" name="estado" ng-model="estadoNuevo">
+						    <option value="" disabled selected>Nuevo Estado</option>
+						    <option>PENDIENTE</option>
+						    <option>EN MODERACION</option>
+						    <option>APROBADO</option>
+						    <option>RECHAZADO</option>
+					  </select>		
+				</div>
+			    
+			
+			<div class="text-center"> 
+				<a ng-click="mostrarHistorial()"><h4> Historial Estados</h4></a>
+			</div>	
+
+			<div ng-show="flagHistorial">
+				<div class="col-xs-12 text-center">
+					<div class="col-xs-2 mini-titulo-moderacion">
+						<h5>Usuarios</h5>
+					</div>
+					<div class="col-xs-2">
+						<h5>Fechas</h5>
+					</div>
+					<div class="col-xs-2">
+						<h5>Estados</h5>
+					</div>
+					<div class="col-xs-6">
+						<h5>Comentarios</h5>
+					</div>
+				</div>
+
+				<div class="col-xs-12">
+					<hr class="divisor-moderacion">				
+				</div>					
+					
+				<div class="col-xs-12 tabla-moderacion" ng-repeat="estado in elemento.listaEstados | orderBy:'$index':true"" >
+					<div class="col-xs-2">
+						<h5 >{{estado.usuario.persona.nombre}}</h5>
+					</div>
+					<div class="col-xs-2">
+						<h5 >{{estado.fecha}}</h5>
+					</div>
+					<div class="col-xs-2">
+						<h5 ng-class="{'ultimo-estado': $index==0}">{{estado.estado}}</h5>
+					</div>
+					<div class="col-xs-6">
+						<textarea class="form-control" rows="2">{{estado.comentario}}</textarea>
+					</div>
+				</div>
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Aplicar Cambios</button>
+			
+    	</div>
+    	</form>
+		<div class="row omb_row-sm-offset-3">
+			
+		</div>	    	
+	</div>
+</div>

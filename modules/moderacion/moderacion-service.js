@@ -6,39 +6,28 @@ angular.module('Moderacion')
     var service = {};
 
     service.getOrganizaciones = function() {
-     return $http.get($rootScope.organizacionService + 'findbyestado' + '?estado='+ 'PENDIENTE');
-   };
-
-   service.getLugares = function() {
-     return $http.get($rootScope.entidadService + 'findbyestado' + '?estado='+ 'PENDIENTE');
+     return $http.get($rootScope.organizacionService + 'findall');
    };
 
    service.getEventos = function() {
-     return $http.get('https://cbaaccesible.herokuapp.com/serviceevento/' + 'findbyestado' + '?estado='+ 'PENDIENTE');
+     return $http.get('https://cbaaccesible.herokuapp.com/serviceevento/' + 'findall');
    };    
+   
+   service.cambiarEstadoOrganizacion = function(options) {
+    var deferred = $q.defer();
+    console.log(options);
+     $http.post($rootScope.organizacionService + 'setestado?' + 'id=' + options.id, options.estado).success(function (data) {
+            deferred.resolve();
+          });
+      return deferred.promise;
+   }; 
 
-   service.aprobarOrganizacion = function(organizacion) {
-     return $http.post($rootScope.organizacionService + 'aprobarorganizacion', organizacion);
-   };   
-
-   service.aprobarLugar = function(lugar) {
-     return $http.post($rootScope.entidadService + 'aprobarlugar', lugar);
-   };   
-
-   service.aprobarEvento = function(evento) {
-     return $http.post('https://cbaaccesible.herokuapp.com/serviceevento/' + 'aprobarevento', evento);
-   };   
-
-   service.rechazarOrganizacion = function(organizacion) {
-     return $http.post($rootScope.organizacionService + 'rechazarorganizacion', organizacion);
-   };   
-
-   service.rechazarLugar = function(lugar) {
-     return $http.post($rootScope.entidadService + 'rechazarlugar', lugar);
-   };   
-
-   service.rechazarEvento = function(evento) {
-     return $http.post('https://cbaaccesible.herokuapp.com/serviceevento/' + 'rechazarevento', evento);
+   service.cambiarEstadoEvento = function(options) {
+    var deferred = $q.defer();     
+     $http.post('https://cbaaccesible.herokuapp.com/serviceevento/' + 'setestado?' + 'id=' + options.id, options.estado ).success(function (data) {
+            deferred.resolve();
+          });
+      return deferred.promise;
    }; 
 
    return service;

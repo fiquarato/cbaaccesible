@@ -2,12 +2,12 @@
 
 angular.module('Entidad', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA ENTIDAD
 .controller('EntidadController',
-  function ($scope, EntidadService, $confirm, $filter, $uibModal, $anchorScroll, $location, Notification) {
+  function ($scope, EntidadService, $confirm, $filter, $uibModal, $anchorScroll, $location, Notification, $rootScope) {
 
     $scope.searchTermBusqueda= '';
     $scope.searchTermDiscapacidad= '';
     $scope.searchTermCategoria= '';
-    $scope.mensajeLista= 'Sugerencias para los mejores lugares ';
+    $scope.mensajeLista= 'Sugerencias para las mejores organizaciones ';
 
     var hayEntidades = false;
     var busquedaLength = 0;
@@ -275,6 +275,10 @@ angular.module('Entidad', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA ENTID
     // };
 
     $scope.openAddUpdateModal = function(entidad) { //SE ABRE EL MODAL PARA ACTUALIZAR UNA ENTIDAD
+      
+      if ($rootScope.usuarioLogged == undefined) {
+        $scope.visualizarModalLogIn();
+      }else {
       var modalInstance = $uibModal.open({
         templateUrl: 'modules/entidad/views/addupdateentidad.html',
         controller: 'EntidadAddUpdateController',
@@ -291,6 +295,7 @@ angular.module('Entidad', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA ENTID
         },
           size: 'lg' //'lg' para large, 'md' para medium y 'sm' para small
         });
+      }
     };
 
     $scope.visualizarModalLugarDiscapacidad = function(entidad) { //SE ABRE EL MODAL PARA VISUALIZAR UN LUGAR
@@ -312,11 +317,32 @@ angular.module('Entidad', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA ENTID
         });
     };
 
+    $scope.visualizarModalLogIn = function() { //SE ABRE EL MODAL PARA VISUALIZAR UN LUGAR
+      var modalInstance = $uibModal.open({
+        templateUrl: 'modules/log-in/views/log-in.html',
+        controller: 'LogInController',
+        resolve: {
+          init: function(){
+            return $scope.init;
+          }
+        },
+          size: 'sm' //'lg' para large, 'md' para medium y 'sm' para small
+        });
+    };
+
+    $scope.logOut = function() {
+      $rootScope.usuarioLogged = undefined;
+    };
+
   });
 // Controlador de Modal de Entidades
 angular.module('Entidad')
 .controller('EntidadAddUpdateController', 
-  function ($scope, EntidadService, $uibModalInstance, Notification, entidades, init, entidad) {
+  function ($scope, EntidadService, $uibModalInstance, Upload, Notification, entidades, init, entidad) {
+
+    $scope.options = {
+    componentRestrictions: { country: 'AR' }
+    };
 
     $scope.entidades = entidades;// Verificar si es neesario. !!!!!??????
     $scope.init = init;
@@ -386,6 +412,25 @@ angular.module('Entidad')
           Notification.error({message: 'Ocurrio un error al cargar el listado de Discapacidades', delay: 3000,  replaceMessage: true});
         });
     };
+
+    $scope.seleccionarDiscapacidad = function (disc) {
+      console.log(disc);
+      var flag=false;
+      var imagen = $('#image'+disc.id);
+      for (var i = 0; i < $scope.discapacidadesSeleccionadas.length ; i++) {       
+        if ($scope.discapacidadesSeleccionadas[i] == disc) {
+            imagen.children("*").removeClass('imagen-seleccionada');
+            $scope.discapacidadesSeleccionadas.splice(i,1);
+            flag = true;
+        }
+      }
+      if (!flag) {
+        $scope.discapacidadesSeleccionadas.push(disc);
+        imagen.children("*").addClass('imagen-seleccionada');
+      }
+
+      
+    };
     
     // Categorias - Subcategorias Metodos controladores   
     var obtenerCategorias = function(){
@@ -424,7 +469,7 @@ angular.module('Entidad')
 
          for (var in2 = 0; in2 < allSubcategorias.length; in2++) {
             var subc = allSubcategorias[in2];
-            if(cat.id == subc.categoriaLugar.id){
+            if(cat.id == subc.categoriaOrg.id){
               cat.subcategorias.push(subc);
             }                  
          }
@@ -467,14 +512,24 @@ angular.module('Entidad')
       }
     };
 
-    var crearEntidad = function() {         
+
+
+    var crearEntidad = function() {  
+  
       $scope.nuevaEntidad.listaTiposDiscapacidad = $scope.discapacidadesSeleccionadas; // Aca le indico las discapacidades que seleccione
-      $scope.nuevaEntidad.listaSubCategoriasLugar = $scope.subCategoriasSeleccionadas;
+      $scope.nuevaEntidad.listaSubCategorias = $scope.subCategoriasSeleccionadas;
+      $scope.nuevaEntidad.direccion.lugar = $scope.place.name;
       var miPromesa = EntidadService.crearEntidad($scope.nuevaEntidad);
       miPromesa.then(
         function(response){
+          Upload.upload({
+              url: 'https://cbaaccesible.herokuapp.com/serviceorganizacion/uploadimageprofile',
+              fields: {'idOrganizacion': response.data.id}, // additional data to send
+              file: $scope.logo
+          });  
           $scope.cancelar();
           $scope.init();
+          
           Notification.success({message: 'La entidad se creó correctamente', delay: 3000});
         }, function(error) {
           if(error.data.message) {

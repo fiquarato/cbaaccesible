@@ -14,10 +14,10 @@
             <ul class="list-group">
                 <h2>Información</h2>
                 <li class="list-group-item"><strong>Donde?: </strong>{{ evento.direccion.calle }} {{ evento.direccion.numero }} {{evento.depto}}</li>
-                <li class="list-group-item"><strong>Cuando?: </strong>Desde: {{ evento.fechaInicio | solofecha }} Hasta: {{ evento.fechaFin | solofecha }}</li>
+                <li class="list-group-item"><strong>Cuando?: </strong>Desde: {{ evento.fechaInicio | solofecha }} - Hasta: {{ evento.fechaFin | solofecha }}</li>
                 <li class="list-group-item"><strong>Horario?: </strong>Desde: {{ evento.fechaInicio | solohora }} Hasta: {{ evento.fechaFin | solohora }}</li>
-                <li class="list-group-item"><strong>Precio: </strong>{{ evento.precio }}</li>
                 <li class="list-group-item"><strong>Sitio Web: </strong>{{ evento.sitioWeb }}</li>
+                <li class="list-group-item"><strong>Organizador: </strong>{{ evento.organizador.nombre }}</li>
             </ul>
         </div>
     </div>

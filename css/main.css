@@ -1,5 +1,5 @@
 html, body {
-  height: 100%;
+  height: 95%;
   margin: 0;
   background: #FFFFFF;
 }
@@ -16,7 +16,7 @@ footer {
 }
 
 .navbar-home {
-  background-color: #3F586C;
+  background-color: #337ab7;
 }
 
 .container {
@@ -40,7 +40,7 @@ footer {
 
 .home-body {
   background-image: url("../images/backgroundHome.jpg");
-  background-size: contain;
+  background-size: cover;
   height: 100vh;
   padding-top: 125PX;
 }
@@ -49,6 +49,20 @@ footer {
   background-image: url("../images/backgroundHome.jpg");
   background-size: contain;
   height: 100vh;
+}
+
+.moderacion-body .pre-scrollable {
+  max-height: 445px;
+  overflow-y: auto;
+}
+
+.boton-moderacion {
+  background-color: #3f586c;
+    color: white;
+}
+.boton-moderacion:hover {
+  background-color: black;
+    color: white;
 }
 
 .card {
@@ -116,7 +130,7 @@ footer {
 }
 
 .tooltip-home {
-  font-size: 30px;
+  font-size: 26px;
 }
 
 .agregar {
@@ -228,11 +242,18 @@ footer {
     font-size: 20px;
   }
 
-  .buttons-header {
+  .buttons-header-eventos {
     margin-top: 10px;
     margin-left: -70px;
     background-color: white;
   }
+
+  .buttons-header-lugares {
+    margin-top: 10px;
+    margin-left: -70px;
+    background-color: white;
+  }
+
   .logo {
       height: 60px;
   }
@@ -251,34 +272,68 @@ footer {
     padding: 0;
     width: 66%;
   }
+  .categorias-ddl {
+    margin-top: 15px;
+    margin-left: 17px;
+    width: 150px;
+  }
+
+  .discapacidades-ddl {
+    margin-top: 15px;
+    margin-left: 28px;
+    width: 150px;
+  }
+
+  .calendar-input {
+    padding: 8px 14px;
+    margin-top: 14px;
+    margin-left: 115px;
+    height: 37px;
+    width: 42px;
+  }
+
   .angular-google-map-container { 
     height: calc(100vh - 4em - 6px);
   }
    .logo-texto {
-      margin-top: 20px;
-      height: 17px;
-      margin-left: -33px;
+      margin-top: 17px;
+      height: 34px;
+      margin-left: -7px;
   }
   .margin-map {
     margin-top: 52px;
   }
   
   .buscador {
-      margin-top: 9px;
-      margin-left: -35px;
+      margin-top: 15px;
+      margin-left: -20px;
+      width: 138px;
   }
 
   .iconos-header {
         font-size: 12px;
   }
 
-  .buttons-header {
-    margin-top: 10px;
-    margin-left: -50px;
-    width: 35px;
+  .buttons-header-eventos {
+    margin-top: 14px;
+    margin-left: 76px;
+    width: 38px;
+    height: 37px;
   }
+
+  .buttons-header-lugares {
+    margin-top: 13px;
+    margin-left: 116px;
+    width: 38px;
+    height: 37px;
+}
+
   .logo {
-      height: 50px;
+      height: 54px;
+      margin-top: 2px;
+  }
+  .logo-no-padding {
+    padding: 0px;
   }
   .img-padding {
     padding-right: 0px;
@@ -316,7 +371,7 @@ footer {
     min-width: 220px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    color: #3f586c;
+    color: #337ab7;
 }
 
 .dropdown-content a {
@@ -327,7 +382,7 @@ footer {
 }
 
 .dropdown-content a:hover {
-  background-color: #3f586c;
+  background-color: #337ab7;
   color: white;
 }
 
@@ -337,4 +392,70 @@ footer {
 
 .dropdown-logo:hover .dropbtn {
     background-color: #3e8e41;
+}
+
+.ddl-moderacion {
+  margin-top: 10px;
+}
+
+.tabla-moderacion {
+  margin-bottom: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.divisor-moderacion {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.mini-titulo-moderacion {
+  padding-left: 0px;
+}
+
+.ultimo-estado {
+  color: #337ab7;
+  font-weight: bold;
+}
+.terminado-label {
+    background-color: #fa5655;
+    color: white;
+    margin-top: 0px;
+    margin-left: -30px;
+}
+
+.pac-container {
+  z-index: 100000;
+}
+
+
+.imagen-seleccionada {
+   -webkit-filter: brightness(50%);
+  -webkit-transition: all 1s ease;
+     -moz-transition: all 1s ease;
+       -o-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+          transition: all 1s ease;
+}
+
+.discapacidades-seleccionadas {
+  margin-top: 40px;
+}
+
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+
+.image-box {
+    border: 5px dashed #DDD;
+    width: 200px;
+    height: 200px;
+    padding-top: 25px;
+    margin: 10px;
 }

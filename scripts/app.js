@@ -5,11 +5,17 @@ angular.module('Entidad', []);
 angular.module('Eventos', []);
 angular.module('Moderacion', []);
 
+
+angular.module('Home', []);
+angular.module('LogIn', []);
+angular.module('Registracion', []);
 var app = angular.module('CbaAccesibleApp', [
     'Entidad',
     'Eventos',
     'Home',
     'Moderacion',
+    'LogIn',
+    'Registracion',
     'ngRoute',
     'ngCookies',
     'infinite-scroll',
@@ -19,7 +25,9 @@ var app = angular.module('CbaAccesibleApp', [
     'angularjs-dropdown-multiselect',
     'jcs-autoValidate',
     'checklist-model',
-    'daterangepicker'
+    'daterangepicker',
+    'vsGoogleAutocomplete',
+    'ngFileUpload'
 ]);
 
 app.config(['$routeProvider', function ($routeProvider) {
@@ -43,18 +51,9 @@ app.config(['$routeProvider', function ($routeProvider) {
         .otherwise({ redirectTo: '/home' });
 }]);
 
-app.config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyAZWZiCR_N7b05aQRHyQg2e08t_pX50N-I',
-        v: '3.20', //defaults to latest 3.X anyhow
-        libraries: 'weather,geometry,visualization'
-    });
-})
-
 app.run(['$rootScope', '$location', '$cookieStore', '$http',
     function ($rootScope, $location, $cookieStore, $http) {
         //SERVICE URL LOCAL
-        $rootScope.entidadService = 'https://cbaaccesible.herokuapp.com/servicelugar/';
         $rootScope.tipoDiscapacidadService = 'https://cbaaccesible.herokuapp.com/servicetipodiscapacidad/';
         $rootScope.categoriasService = 'https://cbaaccesible.herokuapp.com/servicecategorialugar/';
         $rootScope.subCategoriasService = 'https://cbaaccesible.herokuapp.com/servicesubcategorialugar/';
@@ -64,8 +63,19 @@ app.run(['$rootScope', '$location', '$cookieStore', '$http',
 
         $rootScope.organizacionService = 'https://cbaaccesible.herokuapp.com/serviceorganizacion/';
 
+        //service url local para log-in y registracion
+        $rootScope.logInService = 'https://cbaaccesible.herokuapp.com/serviceusuario/';
+        $rootScope.registracionService = 'https://cbaaccesible.herokuapp.com/serviceusuario/';
+
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};
+
+        //determinamos usuario anonimo al iniciar la app
+        $rootScope.usuarioLogged = undefined;
+        
+        //Comentar para subir al master
+        //$rootScope.usuarioLogged = {"id":1,"email":"admin@admin.com","pass":"admin","persona":null,"tipoUsuario":"MODERADOR"};
+
 
     }]);
 
@@ -75,7 +85,6 @@ app.filter('solofecha', function () {
         return unaFecha.format("DD/MM/YYYY");
     };
 })
-
 .filter('solohora', function () {
     return function (fecha) {
         var unaFecha = moment( fecha , "hh:mm DD/MM/YYYY");        
