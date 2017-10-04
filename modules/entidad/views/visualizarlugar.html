@@ -7,17 +7,16 @@
         <div class="col col-md-4 img-padding">
             <br>
             <br>
-            <img ng-src="images/Shop-icon.png" class="img-responsive img-entidad">
+            <img ng-src="https://cbaaccesible.herokuapp.com
+/serviceorganizacion/images-upload/organizacion{{lugar.id}}.jpg" class="img-responsive img-entidad img-rounded">
         </div>
 
         <div class="col col-md-8">
             <ul class="list-group">
                 <h2>Información</h2>
                 <li class="list-group-item">Direccion: {{ lugar.direccion.calle }} {{ lugar.direccion.numero }}</li>
-                <li class="list-group-item">Codigo Postal: {{ lugar.direccion.codigoPostal}}</li>
                 <li class="list-group-item">Telefono Principal: {{ lugar.telefono}}</li>
-                <li class="list-group-item">Telefono Auxiliar: {{ lugar.telefonoAuxiliar}}</li>
-                <li class="list-group-item">Email: {{ lugar.email}}</li>
+                <li class="list-group-item">Email: {{ lugar.email }}</li>
                 <li class="list-group-item">Sitio Web: {{ lugar.sitioWeb}}</li>
             </ul>
         </div>
@@ -38,7 +37,7 @@
         </div>
         <div class="col col-md-12">
             <div class="col-md-3">
-                <p>Subcategorias: </p>
+                <p>Subcategorías: </p>
             </div>
             <div class="col-md-9">
                 <ul style="list-style-type:none;">
