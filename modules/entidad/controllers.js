@@ -62,7 +62,7 @@ angular.module('Entidad', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA ENTID
           longitude: $scope.listado[i].direccion.longitud,
           title: $scope.listado[i].nombre,
           descripcion: $scope.listado[i].direccion.calle + ' ' + $scope.listado[i].direccion.numero,
-          icon:'/images/map_marker64.ico',
+          icon:'https://fiquarato.github.io/cbaaccesible/images/map_marker64.ico',
           options: {
             labelContent: i+1,
             labelAnchor: aux
