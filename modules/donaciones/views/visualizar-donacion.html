@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <h3 class="modal-title"><strong>{{ donacion.titulo }}</strong></h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+
+        <div class="col col-md-4 img-padding">
+            <br>
+            <br>
+            <img ng-src="https://cbaaccesible.herokuapp.com/servicedonacion/images-upload/{{donacion.urlFotoPrincipal}}" class="img-responsive img-entidad img-rounded">
+        </div>
+
+        <div class="col col-md-8">
+            <ul class="list-group">
+                <h2>Información</h2>
+                <li class="list-group-item"><strong>Contacto: </strong>{{donacion.usuario.persona.nombre}} {{donacion.usuario.persona.apellido}}</li>
+                <li class="list-group-item"><strong>Email: </strong>{{donacion.email}}</li>
+                <li class="list-group-item"><strong>Telefono: </strong>{{donacion.telefono}}</li>
+                <li class="list-group-item"><strong>Disponible hasta: </strong>{{ donacion.fechaFinalizacion | solofecha}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-12"><hr></div>
+
+    <div class="row">
+        <div class="col col-md-12">
+            <div class="col-md-3">
+                <p>Discapacidades: </p>
+            </div>
+            <div class="col-md-9">
+                <ul style="list-style-type:none;">
+                    <li style="display: inline;margin: 0 10px 0 0;" ng ng-repeat="disc in donacion.listaTiposDiscapacidad">
+                        <label class="label label-success">{{disc.nombre}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>       
+    </div>
+
+    <div class="row">
+        <div class="col col-md-12">
+            <h3>Descripción: </h3>
+            <textarea class="form-control" rows="5" readonly>{{ donacion.descripcion }}</textarea>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="cancelar()">Cerrar</button>
+</div>

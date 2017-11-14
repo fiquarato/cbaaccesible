@@ -12,7 +12,8 @@
 						<div class="dropdown-content">
 							<a href="#/home">Home</a>
 						    <a href="#/eventos">Eventos</a>
-						    <a href="#/entidades">Organizaciones</a>
+							<a href="#/entidades">Organizaciones</a>
+							<a href="#/donaciones">Donaciones</a>
 						</div>
 					</div>
 					<div class="col-xs-8 logo-no-padding">
@@ -61,6 +62,7 @@
 		<ul class="nav nav-tabs">
 			<li class="active"><a data-target="#organizaciones" data-toggle="tab" >Organizaciones<i class="fa" ng-click="tabActiva='organizaciones'"></i></a></li>
 			<li><a data-target="#eventos" data-toggle="tab" ng-click="tabActiva='eventos'">Eventos<i class="fa"></i></a></li>
+			<li><a data-target="#donaciones" data-toggle="tab" ng-click="tabActiva='donaciones'">Donaciones<i class="fa"></i></a></li>
 		</ul>
 		<div class="tab-content">
 		<div class="tab-pane active" id="organizaciones">
@@ -109,6 +111,33 @@
 	                        <h3 class="titulo-entidad"><a class="link-entidad" ng-click="visualizarModalEvento(x)">{{$index +1}}. {{x.nombre}}</a></h3>
 	                        <h5 class="descripcion-entidad">Fecha: {{x.fechaInicio}} - {{x.fechaFin}}</h5>
 	                        <h5 class="descripcion-entidad">{{x.direccion.calle}} {{x.direccion.numero}}, Ciudad de Córdoba</h5>		
+						</div>
+						<div class="col-xs-2">
+							<h3>{{x.estadoActual.estado}}</h3>
+							<h5>{{x.estadoActual.fecha}}</h5>			
+						</div>
+						<div class="col-xs-3 text-center">
+								<button type="button" ng-click="visualizarModalEvento(x)" class="btn boton-moderacion glyphicon glyphicon-search" uib-tooltip="Ver detalle"></button>
+								<button type="button" ng-click="" class="btn boton-moderacion glyphicon glyphicon-pencil" uib-tooltip="Editar"></button>
+								<button type="button" ng-click="visualizarModalModeracion(x, tabActiva)" class="btn boton-moderacion glyphicon glyphicon-check" uib-tooltip="Moderar"></button>	
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane" id="donaciones">
+				<div class="col-md-12">
+					<div class="col-md-7 h4">Donacion</div>
+					<div class="col-md-3 h4">Estado</div>
+					<div class="col-md-2 h4">Acciones</div>
+				</div>
+			<div class="pre-scrollable col-md-12">
+					<div class="row" ng-repeat="x in listadonacion">
+						<hr>
+						<div class="col-xs-1 img-padding center">
+							<img ng-src="images/Shop-icon.png" class="img-responsive img-entidad">
+						</div>
+						<div class="col-xs-6">
+	                        <h3 class="titulo-entidad"><a class="link-entidad" ng-click="visualizarModalDonacion(x)">{{$index +1}}. {{x.titulo}}</a></h3>		
 						</div>
 						<div class="col-xs-2">
 							<h3>{{x.estadoActual.estado}}</h3>

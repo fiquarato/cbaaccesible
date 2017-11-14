@@ -64,8 +64,8 @@ footer {
   background-color: black;
     color: white;
 }
-
-.card {
+ 
+.home-body .card {
     font-size: 1em;
     overflow: hidden;
     padding: 0;
@@ -75,29 +75,64 @@ footer {
     /*background-color: #f8f8f8;;*/
 }
 
-.card-block {
-    font-size: 1em;
-    position: relative;
-    margin: 0;
-    padding: 1px;
-    border: none;
-    border-top: 2px solid rgba(34, 36, 38, .1);
-    box-shadow: none;
-    background-color: #f8f8f8;
+.home-body .card-block {
+      font-size: 1em;
+      position: relative;
+      margin: 0;
+      padding: 1px;
+      border: none;
+      border-top: 2px solid rgba(34, 36, 38, .1);
+      box-shadow: none;
+      background-color: #f8f8f8;
+  }
+
+.home-body .card-img-top {
+      display: block;
+      width: 100%;
+      height: auto;
+  }
+
+.home-body .card-title {
+      font-size: 1.28571429em;
+      font-weight: 700;
+      line-height: 1.2857em;
+      text-align: center;
+  }
+
+.card-margin {
 }
 
-.card-img-top {
-    display: block;
-    width: 100%;
-    height: auto;
+.grilla-donacion {
+  padding-top: 35px;
 }
+  .grilla-donacion .card {
+      /* Add shadows to create the "card" effect */
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      transition: 0.3s;
+      border-radius: 5px; /* 5px rounded corners */
+      margin-bottom: 30px;
+  }
 
-.card-title {
-    font-size: 1.28571429em;
-    font-weight: 700;
-    line-height: 1.2857em;
-    text-align: center;
-}
+  /* On mouse-over, add a deeper shadow */
+  .grilla-donacion .card:hover {
+      box-shadow: 0 8px 16px 0 grey;
+  }
+
+  /* Add some padding inside the card container */
+  .grilla-donacion .container-card {
+      padding: 2px 16px;
+      background-color: #337ab7;
+      color: white;
+      border-radius: 5px;
+  }
+  /* Add rounded corners to the top left and the top right corner of the image */
+  .grilla-donacion img {
+      margin: auto;
+      width: 100%;
+      height: 100%;
+      border-radius: 5px 5px 0 0;
+  }
+
 
 /* Add rounded corners to the top left and the top right corner of the image */
 .img-home {
@@ -253,6 +288,11 @@ footer {
     margin-left: -70px;
     background-color: white;
   }
+  .buttons-header-donaciones {
+    margin-top: 10px;
+    margin-left: -155px;
+    background-color: white;
+  }
 
   .logo {
       height: 60px;
@@ -326,7 +366,13 @@ footer {
     margin-left: 116px;
     width: 38px;
     height: 37px;
-}
+  }
+
+  .buttons-header-donaciones {
+    margin-top: 15px;
+    margin-left: -8px;
+    background-color: white;
+  }
 
   .logo {
       height: 54px;

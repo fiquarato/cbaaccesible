@@ -50,11 +50,10 @@
     <div class="col-md-6">
 
             <div ng-show="logo==undefined" class="col-md-12">
-            <div ngf-drop ngf-select ng-model="logo" class="drop-box" 
-                ngf-drag-over-class="'dragover'" ngf-multiple="flase" ngf-allow-dir="true"
-                accept="image/*" ngf-resize="{width: 200px, height: 200px, centerCrop: true}" ngf-pattern="'image/*'">Drop images here or click to upload</div>
-        </div>
-        <img ngf-thumbnail="logo" class="image-box">
+                <div ngf-drop ngf-select ng-model="logo" class="drop-box" ngf-drag-over-class="'dragover'" ngf-multiple="flase" ngf-allow-dir="true"
+                    accept="image/*" ngf-resize="{width: 512, height: 512, centerCrop: true}" ngf-pattern="'image/*'">Drop images here or click to upload</div>
+            </div>
+            <img ngf-thumbnail="logo" class="image-box">
     </div>
 
         <div class="col-md-12">

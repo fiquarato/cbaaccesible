@@ -11,7 +11,8 @@
                     <div class="dropdown-content">
                         <a href="#/home">Home</a>
                         <a href="#/entidades">Organizaciones</a>
-                        <a href="#/moderacion" ng-show="usuarioLogged.tipoUsuario == 'MODERADOR'">Moderacion</a>
+                        <a href="#/donaciones">Donaciones</a>
+                        <a href="#/moderacion" ng-show="usuarioLogged.tipoUsuario == 'MODERADOR'">Moderación</a>
                     </div>
                 </div>
                 <div class="col-xs-8 logo-no-padding">
@@ -103,8 +104,7 @@
                     </div>
                     <div class="col-xs-3 img-padding">
 
-                        <img ng-src="https://cbaaccesible.herokuapp.com
-/serviceorganizacion/images-upload/evento{{x.id}}.jpg" class="img-responsive img-entidad">
+                        <img ng-src="https://cbaaccesible.herokuapp.com/serviceorganizacion/images-upload/{{x.urlFotoPerfil}}" class="img-responsive img-entidad">
 
                     </div>
 
@@ -129,8 +129,7 @@
                         <h5 class="descripcion-entidad"><strong>Dirección: </strong>{{x.direccion.calle}} {{x.direccion.numero}}, Ciudad de Córdoba</h5>
                     </div>
                     <div class="col-xs-3 img-padding">
-                        <img ng-src="https://cbaaccesible.herokuapp.com
-/serviceorganizacion/images-upload/evento{{x.id}}.jpg" class="img-responsive img-entidad img-rounded">
+                        <img ng-src="https://cbaaccesible.herokuapp.com/serviceevento/images-upload/{{x.urlFotoPerfil}}" class="img-responsive img-entidad img-rounded">
                     </div>
 
                 </div>

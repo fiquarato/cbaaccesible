@@ -1,0 +1,68 @@
+<form name="myForm"  ng-submit="validarCreacion(myForm.$valid)" novalidate="novalidate">
+<div class="modal-header">
+    <h3 class="modal-title"><strong> Nueva Donación</strong></h3>
+</div>
+
+<div class="modal-body">
+
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label for="nombre" class="control-label">Titulo*</label>
+                <input name="nombre" type="text" ng-model="nuevaDonacion.titulo" class="form-control" required>
+            </div>            
+
+            <div class="form-group">
+                <label for="descripcion" class="control-label">Descripción*</label>
+                <textarea name="descripcion" ng-model="nuevaDonacion.descripcion" rows="3" class="form-control" required></textarea>
+            </div>
+            <!-- Multiselect Discapacidades -->
+            <div class="form-group">
+                <div ng-dropdown-multiselect="" 
+                     options="listadoDiscapacidades" 
+                     selected-model="discapacidadesSeleccionadas" 
+                     extra-settings="multiselectConfig"
+                     translation-texts="traduccionMultiselect" 
+                     events="eventosMultiselect" 
+                     disable-valid-styling="true">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="control-label">Email*</label>
+                <input name="email" type="email" ng-model="nuevaDonacion.email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telefono" class="control-label">Telefono*</label>
+                <input name="telefono" type="text" ng-model="nuevaDonacion.telefono" class="form-control" ng-minlength="7" ng-maxlength="15" placeholder="0351-155612532">
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <p>
+                <strong>Imagenes:</strong>
+                <div ng-show="logo==undefined" class="col-md-12">
+                    <div ngf-drop ngf-select 
+                         ng-model="logo" 
+                         class="drop-box" 
+                         ngf-drag-over-class="'dragover'" 
+                         ngf-multiple="flase" 
+                         ngf-allow-dir="true"
+                        accept="image/*" 
+                        ngf-resize="{width: 300, height: 250, centerCrop: true}" 
+                        ngf-pattern="'image/*'">Arrastra o hace click para cargar una nueva imagen</div>
+                </div>
+                <img ngf-thumbnail="logo" class="image-box">
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-success" type="submit">Aceptar</button>
+    <button class="btn btn-danger" ng-click="cancelar()">Cerrar</button>
+</div>
+</form>

@@ -4,14 +4,15 @@
 angular.module('Entidad', []);
 angular.module('Eventos', []);
 angular.module('Moderacion', []);
-
-
+angular.module('Donaciones', []);
 angular.module('Home', []);
 angular.module('LogIn', []);
 angular.module('Registracion', []);
+
 var app = angular.module('CbaAccesibleApp', [
     'Entidad',
     'Eventos',
+    'Donaciones',
     'Home',
     'Moderacion',
     'LogIn',
@@ -40,6 +41,10 @@ app.config(['$routeProvider', function ($routeProvider) {
             controller: 'PrincipalEventosController',
             templateUrl: 'modules/eventos/views/principal-eventos.html'
         })
+        .when('/donaciones', {
+            controller: 'PrincipalDonacionesController',
+            templateUrl: 'modules/donaciones/views/principal-donaciones.html'
+        })
         .when('/home', {
             controller: 'HomeController',
             templateUrl: 'modules/home/views/home.html'
@@ -50,14 +55,6 @@ app.config(['$routeProvider', function ($routeProvider) {
         })
         .otherwise({ redirectTo: '/home' });
 }]);
-
-app.config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyAZWZiCR_N7b05aQRHyQg2e08t_pX50N-I',
-        v: '3.20', //defaults to latest 3.X anyhow
-        libraries: 'weather,geometry,visualization,places'
-    });
-})
 
 app.run(['$rootScope', '$location', '$cookieStore', '$http',
     function ($rootScope, $location, $cookieStore, $http) {
@@ -74,6 +71,9 @@ app.run(['$rootScope', '$location', '$cookieStore', '$http',
         //service url local para log-in y registracion
         $rootScope.logInService = 'https://cbaaccesible.herokuapp.com/serviceusuario/';
         $rootScope.registracionService = 'https://cbaaccesible.herokuapp.com/serviceusuario/';
+
+        //service url local DONACIONES
+        $rootScope.donacionesService = 'https://cbaaccesible.herokuapp.com/servicedonacion/';
 
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};

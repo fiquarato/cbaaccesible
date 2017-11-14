@@ -11,8 +11,9 @@
 					</a>
 					<div class="dropdown-content">
 						<a href="#/eventos">Eventos</a>
-					    <a href="#/entidades">Organizaciones</a>
-					    <a href="#/moderacion" ng-show="usuarioLogged.tipoUsuario == 'MODERADOR'">Moderacion</a>
+						<a href="#/entidades">Organizaciones</a>
+						<a href="#/donaciones">Donaciones</a>
+					    <a href="#/moderacion" ng-show="usuarioLogged.tipoUsuario == 'MODERADOR'">Moderación</a>
 					</div>
 				</div>
 				<div class="col-xs-8 logo-no-padding">
@@ -59,16 +60,22 @@
 
 	<div class="col-md-12 home-body">
 		<h1 class="text-center home-text">¿QUE DESEA BUSCAR?</h1>
-		<div class="col-md-offset-4 col-md-2">
+		<div class="col-md-offset-3 col-md-2 col-xs-4">
 			<div class="card hvr-grow" uib-tooltip="Organizaciones" tooltip-class="tooltip-home" tooltip-placement="bottom">
-                    <a href="#/entidades"><img class="card-img-top" src="images/places.png"></a>
+                    <a href="#/entidades"><img class="card-img-top img-responsive" src="images/places.png"></a>
                     
             </div>		
 		</div>
 		
-		<div class="col-md-2">
+		<div class="col-md-2 col-xs-4">
+			<div class="card hvr-grow" uib-tooltip="Donaciones" tooltip-class="tooltip-home" tooltip-placement="bottom">
+				<a href="#/donaciones"><img class="card-img-top img-responsive" ng-src="images/donation.png"></a>                  
+            </div>
+		</div>
+
+		<div class="col-md-2 col-xs-4">
 			<div class="card hvr-grow" uib-tooltip="Eventos" tooltip-class="tooltip-home" tooltip-placement="bottom">
-				<a href="#/eventos"><img class="card-img-top" ng-src="images/event.png"></a>                  
+				<a href="#/eventos"><img class="card-img-top img-responsive" ng-src="images/event.png"></a>                  
             </div>
 		</div>
 		
