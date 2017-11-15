@@ -118,11 +118,11 @@ angular.module('Eventos', ['uiGmapgoogle-maps']) //DEFINO CONTROLADOR PARA EVENT
                 if (!$scope.listado[i].finalizado) {
                     auxFuturos++;
                     auxMarkers = auxFuturos;
-                    icons = '/images/map_marker64.ico';
+                    icons = 'https://fiquarato.github.io/cbaaccesible/images/map_marker64.ico';
                 } else {
                     auxPasados++;
                     auxMarkers = auxPasados;
-                    icons = '/images/map-markerRED.ico';
+                    icons = 'https://fiquarato.github.io/cbaaccesible/images/map-markerRED.ico';
                 }
                 
                 if($scope.listado[i].direccion!=null){
