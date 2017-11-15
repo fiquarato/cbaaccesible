@@ -104,7 +104,8 @@
                     </div>
                     <div class="col-xs-3 img-padding">
 
-                        <img ng-src="https://cbaaccesible.herokuapp.com/serviceorganizacion/images-upload/{{x.urlFotoPerfil}}" class="img-responsive img-entidad">
+                        <img ng-src="https://cbaaccesible.herokuapp.com/serviceorganizacion/images-upload/{{x.urlFotoPerfil}}"  ng-show="x.urlFotoPerfil!=null" class="img-responsive img-entidad">
+                        <img ng-src="/images/null.jpg" ng-show="x.urlFotoPerfil==null" class="img-responsive img-entidad">
 
                     </div>
 
@@ -129,7 +130,8 @@
                         <h5 class="descripcion-entidad"><strong>Dirección: </strong>{{x.direccion.calle}} {{x.direccion.numero}}, Ciudad de Córdoba</h5>
                     </div>
                     <div class="col-xs-3 img-padding">
-                        <img ng-src="https://cbaaccesible.herokuapp.com/serviceevento/images-upload/{{x.urlFotoPerfil}}" class="img-responsive img-entidad img-rounded">
+                        <img ng-src="https://cbaaccesible.herokuapp.com/serviceevento/images-upload/{{x.urlFotoPerfil}}"  ng-show="x.urlFotoPerfil!=null" class="img-responsive img-entidad img-rounded">
+                        <img ng-src="/images/null.jpg" ng-show="x.urlFotoPerfil==null" class="img-responsive img-entidad">
                     </div>
 
                 </div>

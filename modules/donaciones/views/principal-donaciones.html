@@ -74,7 +74,8 @@
     <div ng-repeat="donacion in grilla">
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 card-margin"  ng-hide="donacion.terminado" ng-click="visualizarModalDetalleDonacion(donacion)">
           <div class="card">  
-              <img ng-src="https://cbaaccesible.herokuapp.com/servicedonacion/images-upload/{{donacion.urlFotoPrincipal}}" alt="Avatar" class="img-responsive">
+              <img ng-src="https://cbaaccesible.herokuapp.com/servicedonacion/images-upload/{{donacion.urlFotoPrincipal}}" ng-show="donacion.urlFotoPrincipal!=null" class="img-responsive">
+              <img ng-src="/images/null.jpg" alt="Avatar" ng-show="donacion.urlFotoPrincipal==null" class="img-responsive">
               <div class="container-card">
                 <h4><b>{{donacion.titulo}}</b></h4> 
                 <p>{{donacion.descripcion}}</p> 

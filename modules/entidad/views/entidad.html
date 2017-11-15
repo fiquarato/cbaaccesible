@@ -94,7 +94,8 @@
 						<h5 class="descripcion-entidad">{{x.direccion.calle}} {{x.direccion.numero}}, {{x.direccion.ciudad}}</h5>
 					</div>
 					<div class="col-xs-3 img-padding">
-						<img ng-src="https://cbaaccesible.herokuapp.com/serviceorganizacion/images-upload/{{x.urlFotoPerfil}}" class="img-responsive img-entidad img-rounded">
+						<img ng-src="https://cbaaccesible.herokuapp.com/serviceorganizacion/images-upload/{{x.urlFotoPerfil}}"  ng-show="x.urlFotoPerfil!=null" class="img-responsive img-entidad img-rounded">
+						<img ng-src="/images/null.jpg" ng-show="x.urlFotoPerfil==null" class="img-responsive img-entidad img-rounded">
 					</div>
 					
 				</div>
